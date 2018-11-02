@@ -6,6 +6,9 @@ from django.db import models
 class Categoria(models.Model):
     nombre_categoria = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.nombre_categoria
+
 
 class Articulo(models.Model):
     categoria = models.ForeignKey(
@@ -15,8 +18,11 @@ class Articulo(models.Model):
     estado = models.CharField(max_length=100)
     existencia = models.IntegerField()
     descripcion = models.CharField(max_length=200)
-    imagen_articulo = models.ImageField(upload='static/img')
+    imagen_articulo = models.ImageField(upload_to='static/img')
     vendible = models.BooleanField()
+
+    def __str__(self):
+        return self.nombre_articulo
 
 
 class Venta(models.Model):
@@ -26,23 +32,3 @@ class Venta(models.Model):
     precio_venta_unitario = models.FloatField()
     monto_total = models.FloatField()
     fecha_venta = models.DateField()
-
-
-class Transaccion(models.Model):
-    fecha_transaccion = models.DateField()
-    concepto_transaccion = models.CharField(max_length=100)
-    tipo = models.CharField(max_length=50)
-    monto_transaccion = models.FloatField()
-
-
-class Periodo(models.Model):
-    transacciones=models.ForeignKey(Transaccion,null=True,on_delete=models.CASCADE)
-    inicio_periodo = models.DateField()
-    final_periodo = models.DateField()
-
-
-class PeriodoAnualDirectivo(models.Model):
-    periodo=models.ForeignKey(Periodo,null=True,on_delete=models.CASCADE)
-    inicio_periodo_anual = models.DateField()
-    final_periodo_anual = models.DateField()
-    nombre_periodo = models.CharField(max_length=50)
