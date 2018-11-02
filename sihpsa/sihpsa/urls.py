@@ -18,10 +18,13 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from sihpsa.views import base
+from django.contrib.auth.views import login, logout_then_login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', base, name="base"),
+    path('accounts/login/', login, {'template_name':'login/login.html'}, name='login'),
+    path('logout/', logout_then_login, name='logout'),
 ]
 
 
