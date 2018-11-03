@@ -25,6 +25,7 @@ class Periodo(models.Model):
         Transaccion, null=True, on_delete=models.CASCADE)
     inicio_periodo = models.DateField()
     final_periodo = models.DateField()
+    estado_periodo=models.BooleanField()
 
 
 class PeriodoAnualDirectivo(models.Model):
@@ -32,3 +33,4 @@ class PeriodoAnualDirectivo(models.Model):
     inicio_periodo_anual = models.DateField()
     final_periodo_anual = models.DateField()
     nombre_periodo = models.CharField(max_length=50)
+    estado_periodo_anual=models.BooleanField()
