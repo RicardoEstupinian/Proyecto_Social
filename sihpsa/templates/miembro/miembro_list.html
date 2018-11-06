@@ -1,0 +1,98 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block title %}
+Miembro-Perfil
+{% endblock %}
+{% block content %}
+{% if miembro %}
+	<div class="text-center" style="padding: 10px;">
+	<h3><strong>Perfil de:</strong>{{miembro.nombre_m}}</h3>
+	</div>
+	<div class="row">
+  			<div class="col-md-10 text-center">
+    			<img src="{{ miembro.foto_m.url }}" class="img-responsive" width="400">
+  			</div>
+		</div>
+	<div class="col-md-10 text-center">
+		<hr>
+			<strong>Datos del miembro</strong>
+		<hr>
+	</div>
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+      					<div class="multiple">
+        					<strong>Nombres: </strong>{{ miembro.nombre_m }}
+        				</div>
+      				</div>
+      				<div class="col-md-6">
+      					<div class="multiple">
+        					<strong>Apellidos: </strong>{{ miembro.apellido_m}}
+        				</div>
+      				</div>
+    			</div>
+  			</div>
+  			<br>
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+      					<div class="multiple">
+        					<strong>Carnet: </strong>{{ miembro.carnet }}
+        				</div>
+      				</div>
+      				<div class="col-md-6">
+      					<div class="multiple">
+        					<strong>Estatura: </strong>{{ miembro.estatura}}
+        				</div>
+      				</div>
+    			</div>
+  			</div>
+  			<br>
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+      					<div class="multiple">
+        					<strong>Fecha de nacimiento: </strong>{{ miembro.fecha_nac }}
+        				</div>
+      				</div>
+      				<div class="col-md-6">
+      					<div class="multiple">
+        					<strong>Número de contacto: </strong>{{ miembro.num_contacto}}
+        				</div>
+      				</div>
+    			</div>
+  			</div>
+  			<br>
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+      					<div class="multiple">
+        					<strong>Dirección: </strong>{{ miembro.direccion }}
+        				</div>
+      				</div>
+      				<div class="col-md-6">
+      					<div class="multiple">
+        					<strong>Cargo: </strong>{{ miembro.cargo}}
+        				</div>
+      				</div>
+    			</div>
+  			</div>
+  			<br>
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+      					<div class="multiple">
+        					<strong>Hermandad a la que pertenece: </strong>{{ miembro.hermandad }}
+        				</div>
+      				</div>
+      				<div class="col-md-6">
+      					<div class="multiple">
+        					<strong>Uniformes: </strong>{{ miembro.uniformes.all }}
+        				</div>
+      				</div>
+    			</div>
+  			</div>
+{% else %}
+	<h1 class="text-center">No existe el miembro</h1>
+{% endif %}
+{% endblock%}

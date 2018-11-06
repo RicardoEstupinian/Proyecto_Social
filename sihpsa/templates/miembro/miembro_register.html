@@ -1,0 +1,245 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block title %}
+Registro
+{% endblock %}
+{% block content %}
+
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+
+<form method="post" class="formulario" data-url='/miembro/registrar/'>
+		{% csrf_token %}
+	<div class="col-md-10">
+		<hr>
+			<strong>Datos de la cuenta</strong>
+		<hr>
+	</div>
+		<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+        				<label>Nombres</label>
+				<input class="form-control" type="text" name="first_name" id="id_cuenta_nombre" required>
+      				</div>
+      				<div class="col-md-6">
+        				<label >Apellidos</label>
+				<input class="form-control" type="text" name="last_name" id="id_cuenta_apellido" required>
+      				</div>
+    			</div>
+  			</div>
+		</div>
+		<br>
+		<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+        				<label >Nombre de usuario</label>
+				<input class="form-control" type="text" name="username" id="id_username" required>
+      				</div>
+      				<div class="col-md-6">
+        				<label >Correo</label>
+				<input class="form-control" type="email" name="email" required>
+      				</div>
+    			</div>
+  			</div>
+		</div>
+		<br>
+		<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+        				<label >Contraseña</label>
+				<input class="form-control" type="password" name="password1" required>
+      				</div>
+      				<div class="col-md-6">
+        				<label >Confirmar contraseña</label>
+				<input class="form-control" type="password" name="password2" required>
+      				</div>
+    			</div>
+  			</div>
+		</div>
+		<br>
+		<div class="row">
+  			<div class="col-md-10">
+        		<input class="btn btn-primary btn-lg btn-block" type="submit" name="Guardar" value="Crear Cuenta" id="id_cuenta_guardar">	
+  			</div>
+		</div>
+	</form>
+	<div class="col-md-10">
+
+	<br><br><br>
+	<hr>
+		<strong>Datos del miembro</strong>
+	<hr>
+	</div>
+	
+
+	<form method="post" enctype='multipart/form-data'>
+		{% csrf_token %}
+
+		<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+        				<label>Nombres</label>
+				<input class="form-control" type="text" name="nombre_m" id="id_miembro_nombre">
+      				</div>
+      				<div class="col-md-6">
+        				<label >Apellidos</label>
+				<input class="form-control" type="text" name="apellido_m" id="id_miembro_apellido">
+      				</div>
+    			</div>
+  			</div>
+		</div>
+		<br>
+		<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+        				<label >Estatura</label>
+				<input class="form-control" type="number" step="0.01" name="estatura" min="0" required>
+      				</div>
+      				<div class="col-md-6">
+        				<label >Fecha de nacimiento</label>
+				<input class="form-control" type="date" name="fecha_nac" required>
+      				</div>
+    			</div>
+  			</div>
+		</div>
+		<br>
+		<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+        				<label >Número telefónico</label>
+				<input class="form-control" type="text" name="num_contacto" required>
+      				</div>
+    			</div>
+  			</div>
+		</div>
+		<br>
+		<div class="row">
+  			<div class="col-md-10">
+  				<label >Dirección</label>
+  				<textarea class="form-control" type="text" name="direccion" required></textarea>
+  			</div>
+		</div>
+		<br><br>
+		<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+        				<hr><label >Cargo en la iglesia</label><hr>
+          					{{ form2.cargo }}
+      				</div>
+      				<div class="col-md-6">
+        				<hr><label >Hermandad a la que pertenece</label><hr>
+          					{{ form2.hermandad }}
+      				</div>
+    			</div>
+  			</div>
+		</div>
+		<br><br>
+		<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-4">
+        				<hr><label >Sacramentos realizados</label><hr>
+          					<div class="multiple">{{ form2.sacramentos }}<hr></div>
+      				</div>
+      				<div class="col-md-4">
+        				<hr><label>Uniformes</label><hr>
+							<div class="multiple">{{ form2.uniformes }}<hr></div>
+      				</div>
+      				<div class="col-md-4">
+        					<hr><label>Medallas</label><hr>
+						<div class="multiple">{{ form2.medalla }}</div>
+      				</div>
+    			</div>
+  			</div>
+		</div>
+		<br>
+		<div class="row">
+		<div class="col-md-5">
+			<div class="form-group">
+				<label >Seleccionar foto de perfil</label>
+				<input type="file" name="foto_m" class="btnSeleccionar">
+			</div>
+		</div>
+	</div>
+	<br><br>
+	<div class="col-md-10">
+	<hr>
+		<strong>Datos del encargado del miembro</strong>
+	<hr>
+	</div>
+	<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+        				<label >Nombre del encargado</label>
+				<input class="form-control" type="text" name="nombre_encargado" required>
+      				</div>
+      				<div class="col-md-6">
+        				<label >Parentesco</label>
+				<input class="form-control" type="text" name="parentesco" required>
+      				</div>
+    			</div>
+  			</div>
+		</div>
+		<br>
+		<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+        				<label >Número telefónico del encargado</label>
+				<input class="form-control" type="text" name="num_encargado" required>
+      				</div>
+    			</div>
+  			</div>
+		</div>
+		<br>
+		<div class="row">
+  			<div class="col-md-10">
+        		<input class="btn btn-primary btn-lg btn-block" type="submit" name="btnGuardar" value="Registrar Miembro" id="id_miembro_guardar" disabled="true">
+  			</div>
+		</div>
+		<br>
+	</form>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var $myForm = $('.formulario');
+
+		$myForm.submit(function(event){
+			event.preventDefault();
+			var $formData = $myForm.serialize();
+			var $thisURL = $myForm.attr('data-url') || window.loaction.href;
+
+			$.ajax({
+				method:'POST',
+				url: $thisURL,
+				data: $formData,
+				success: handleSuccess,
+				error: handleError, 
+			});
+			function handleSuccess(){
+				alert('Cuenta registrada con éxito, favor completar los campos restantes');
+				$("#id_miembro_nombre").val($("#id_cuenta_nombre").val());
+				$("#id_miembro_apellido").val($("#id_cuenta_apellido").val());
+				$myForm[0].reset();
+				$('#id_cuenta_guardar').attr("disabled", true);
+				$('#id_miembro_nombre').attr("readonly", true);
+				$('#id_miembro_apellido').attr("readonly", true);
+				$('#id_miembro_guardar').attr("disabled", false);
+			}
+			function handleError(ThrowError){
+				console.log(ThrowError);
+			}
+		});
+	});
+</script>
+
+
+{% endblock %}
