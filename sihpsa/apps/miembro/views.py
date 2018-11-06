@@ -88,9 +88,7 @@ def registro(request):
 	if request.is_ajax():
 		form = CuentaForm(request.POST)
 		if form.is_valid():
-			instance = form.save(commit=False)
-			instance.user = request.user
-			instance.save()
+			form.save()
 
 			apellidos = User.objects.latest('id').last_name.split(' ')
 			year = datetime.datetime.now().year
@@ -125,6 +123,7 @@ def registro(request):
 				miembro = Miembro.objects.latest('id')
 				miembro.cuenta_id = id_cuenta.id
 				miembro.save()
+				form2.save_m2m()
 			return redirect('base')
 	context={
 		'form': form,
