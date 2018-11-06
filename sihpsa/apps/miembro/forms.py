@@ -27,7 +27,6 @@ class MiembroForm(forms.ModelForm):
 		fields = [
 			'nombre_m',
 			'apellido_m',
-			'carnet',
 			'fecha_nac',
 			'estatura',
 			'num_contacto',
@@ -45,7 +44,6 @@ class MiembroForm(forms.ModelForm):
 		labels = {
 			'nombre_m': 'Nombre del miembro',
 			'apellido_m': 'Apellido del miembro',
-			'carnet': 'Carnet del miembro',
 			'fecha_nac': 'Fecha de nacimiento',
 			'estatura': 'Estatura',
 			'num_contacto': 'Número de contacto',
@@ -63,7 +61,6 @@ class MiembroForm(forms.ModelForm):
 		widgets = {
 			'nombre_m': forms.TextInput(),
 			'apellido_m': forms.TextInput(),
-			'carnet': forms.TextInput(),
 			'fecha_nac': forms.DateInput(format='%d/%m/%Y'),
 			'estatura': forms.TextInput(),
 			'num_contacto': forms.TextInput(),

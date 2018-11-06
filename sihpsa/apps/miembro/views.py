@@ -11,14 +11,18 @@ import random
 def carnet(request):
 	apellidos = User.objects.latest('id').last_name.split(' ')
 	year = datetime.datetime.now().year
-	number = random.randrange(1000)
+	number1 = random.randrange(10)
+	number2 = random.randrange(10)
+	number3 = random.randrange(10)
 
 	ap1=apellidos[0]
 	ap2=apellidos[1]
 	year_str = str(year)
-	number_str = str(number)
+	number1_str = str(number1)
+	number2_str = str(number2)
+	number3_str = str(number3)
 
-	carnet = ap1[0]+ap2[0]+year_str[2:4]+number_str
+	carnet = ap1[0]+ap2[0]+year_str[2:4]+number1_str+number2_str+number3_str
 
 	return HttpResponse(carnet)
 
@@ -45,14 +49,18 @@ def registro(request):
 		id_cuenta = User.objects.latest('id')
 		apellidos = id_cuenta.last_name.split(' ')
 		year = datetime.datetime.now().year
-		number = random.randrange(1000)
+		number1 = random.randrange(10)
+		number2 = random.randrange(10)
+		number3 = random.randrange(10)
 
 		ap1=apellidos[0]
 		ap2=apellidos[1]
 		year_str = str(year)
-		number_str = str(number)
+		number1_str = str(number1)
+		number2_str = str(number2)
+		number3_str = str(number3)
 
-		carnet = ap1[0]+ap2[0]+year_str[2:4]+number_str
+		carnet = ap1[0]+ap2[0]+year_str[2:4]+number1_str+number2_str+number3_str
 
 		if form2.is_valid():
 			instance2 = form2.save(commit=False)
