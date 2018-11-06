@@ -28,6 +28,7 @@ urlpatterns = [
     path('', base, name="base"),
     path('accounts/login/', login, {'template_name':'login/login.html'}, name='login'),
     path('logout/', logout_then_login, name='logout'),
+    path('periodo_directivo/',include('apps.transaccion.urls')),
 ]
 
 

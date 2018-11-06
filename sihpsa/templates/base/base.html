@@ -65,29 +65,39 @@
 				      </div>
 				      <nav id="nav-menu-container">
 				        <ul class="nav-menu">
-				          <li><a href="index.html">Home</a></li>
-				          <li><a href="#">Penstaña 1</a></li>
-				          <li><a href="#">Penstaña 2</a></li>
-				          <li><a href="#">Penstaña n</a></li>
-				          
-				          <li class="menu-has-children"><a href="">dropdown nivel 1</a>
+				          <li><a href="#">Home</a></li>
+				          <li><a href="#">Periodos Directivos</a></li>
+				          <li class="menu-has-children"><a href="#">Modulo Financiero</a>
 				            <ul>
-				              <li><a href="blog-home.html">Blog Home</a></li>
-				              <li><a href="blog-single.html">Blog Single</a></li>
-				            </ul>
-				          </li>	
-				          <li class="menu-has-children"><a href="">dropdown nivel 2</a>
-				            <ul>
-				            	  <li><a href="elements.html">Elements</a></li>
-						          <li class="menu-has-children"><a href="">Level 2 </a>
+				            	  <li><a href="#">Registrar Transacción</a></li>
+						          <li class="menu-has-children"><a href="#">Cuentas por Cobrar</a>
 						            <ul>
-						              <li><a href="#">Item One</a></li>
-						              <li><a href="#">Item Two</a></li>
+						              <li><a href="#">Registrar cuenta por cobrar</a></li>
+						              <li><a href="#">Saldar Cuenta</a></li>
 						            </ul>
-						          </li>					                		
+						          </li>
 				            </ul>
-				          </li>					          					          		          
-				          <li><a href="contact.html">Contact</a></li>
+				            <li class="menu-has-children"><a href="#">Modulo de Afiliación</a>
+				            <ul>
+				            	  <li><a href="#">Nuevo miembro</a></li>
+						          <li><a href="#">Ver miembros</a></li>
+				            </ul>
+				          </li>
+				     	  <li><a href="#">Ventas</a></li>					               
+				          <li class="menu-has-children"><a href="#">Inventarios</a>
+				            <ul>
+				            	  <li><a href="#">Nuevo artículo</a></li>
+						          <li><a href="#">Ver artículos</a></li>
+				            </ul>
+				          </li>
+
+
+				          {% if request.user.is_authenticated %}
+							<li><a href="#">Bienvenido: {{user.username}}</a></li>
+							<li><a href="{% url 'logout' %}">Logout </a></li>
+				          {% else %}
+							<li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+				          {% endif %}
 				        </ul>
 				      </nav><!-- #nav-menu-container -->					      		  
 					</div>
