@@ -30,7 +30,7 @@ def carnet(request):
 def miembro_list(request, id_miembro):
 	miembro = Miembro.objects.get(id=id_miembro)
 	return render(request, 'miembro/miembro_list.html', {'miembro':miembro,})
-
+'''
 def registro(request):
 	form = CuentaForm()
 	form2 = MiembroForm()
@@ -74,6 +74,57 @@ def registro(request):
 			data={
 			'message':'form is saved',
 			}
+			return redirect('base')
+	context={
+		'form': form,
+		'form2': form2,
+		}
+	return render(request, 'miembro/miembro_register.html', context)
+'''
+
+def registro(request):
+	form = CuentaForm()
+	form2 = MiembroForm()
+	if request.is_ajax():
+		form = CuentaForm(request.POST)
+		if form.is_valid():
+			instance = form.save(commit=False)
+			instance.user = request.user
+			instance.save()
+
+			apellidos = User.objects.latest('id').last_name.split(' ')
+			year = datetime.datetime.now().year
+			number1 = random.randrange(10)
+			number2 = random.randrange(10)
+			number3 = random.randrange(10)
+
+			ap1=apellidos[0]
+			ap2=apellidos[1]
+			year_str = str(year)
+			number1_str = str(number1)
+			number2_str = str(number2)
+			number3_str = str(number3)
+
+			carnet = ap1[0]+ap2[0]+year_str[2:4]+number1_str+number2_str+number3_str
+
+			data={
+			'carnet': carnet,
+			}
+			return JsonResponse(data)
+	if request.method=='POST':
+		form2 = MiembroForm(request.POST, request.FILES or None)
+		id_cuenta = User.objects.latest('id')
+		apellidos = id_cuenta.last_name.split(' ')
+		
+
+		if form2.is_valid():
+			instance2 = form2.save(commit=False)
+			instance2.user = request.user
+			instance2.save()
+			if 'btnGuardar' in request.POST:
+				miembro = Miembro.objects.latest('id')
+				miembro.cuenta_id = id_cuenta.id
+				miembro.save()
 			return redirect('base')
 	context={
 		'form': form,

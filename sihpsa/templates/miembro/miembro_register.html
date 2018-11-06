@@ -97,8 +97,8 @@ Registro
   			<div class="col-md-10">
     			<div class="row">
       				<div class="col-md-6">
-        				<label >Estatura</label>
-				<input class="form-control" type="number" step="0.01" name="estatura" min="0" required>
+        				<label >Carnet del miembro</label>
+				<input class="form-control" type="text" name="carnet" id="id_miembro_carnet">
       				</div>
       				<div class="col-md-6">
         				<label >Fecha de nacimiento</label>
@@ -111,6 +111,10 @@ Registro
 		<div class="row">
   			<div class="col-md-10">
     			<div class="row">
+      				<div class="col-md-6">
+        				<label >Estatura</label>
+				<input class="form-control" type="number" step="0.01" name="estatura" min="0" required>
+      				</div>
       				<div class="col-md-6">
         				<label >Número telefónico</label>
 				<input class="form-control" type="text" name="num_contacto" required>
@@ -224,15 +228,18 @@ Registro
 				success: handleSuccess,
 				error: handleError, 
 			});
-			function handleSuccess(){
+			function handleSuccess(data){
 				alert('Cuenta registrada con éxito, favor completar los campos restantes');
 				$("#id_miembro_nombre").val($("#id_cuenta_nombre").val());
 				$("#id_miembro_apellido").val($("#id_cuenta_apellido").val());
+				$("#id_miembro_carnet").val(data.carnet);
 				$myForm[0].reset();
 				$('#id_cuenta_guardar').attr("disabled", true);
 				$('#id_miembro_nombre').attr("readonly", true);
 				$('#id_miembro_apellido').attr("readonly", true);
 				$('#id_miembro_guardar').attr("disabled", false);
+				$('#id_miembro_carnet').attr("readonly", true);
+				$('#id_miembro_carnet').attr("disabled", false);
 			}
 			function handleError(ThrowError){
 				console.log(ThrowError);
