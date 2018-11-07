@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block title %}SIHPSA | Inventario{% endblock %}
+{%block content%}
+{%if error%}
+<div class="alert alert-danger text-center" role="alert">
+    Campo Vacio. Ingrese nombre de articulo para buscar.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{%endif%}
+<form action="" method="GET" class="form-inline mb-4 mt-4 justify-content-center">
+
+
+    <div class="form-group mx-sm-3 mb-2">
+        <input type="text" class="form-control " placeholder="Ingrese nombre de articulo a buscar" name="busart">
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+
+
+
+</form>
+<form action="" method="GET" class="form-inline mb-4 mt-4 justify-content-center">
+    <div align="center" class="container" aling="center">
+        <div class="btn-group mt-3 mb-3" role="group" aria-label="Basic example">
+            {%for cat in categorias%}
+            <button type="submit" class="btn btn-secondary" name="{{cat.nombre_categoria}}">{{cat.nombre_categoria}}
+            </button>
+            {%endfor%}
+            <button type="submit" class="btn btn-secondary" name="todos">Mostrar Todos</button>
+        </div>
+    </div>
+</form>
+<thead>
+    <tr>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Existencia</th>
+                    <th scope="col">Foto</th>
+                    <th scope="col">Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    {% for articulo in articulos_mostrar%}
+                    <tr>
+                        <th scope="row">{{articulo.nombre_articulo}}</th>
+                        <td>{{articulo.categoria}}</td>
+                        <td>{{articulo.descripcion}}</td>
+                        <td>{{articulo.precio}}</td>
+                        <td>{{articulo.estado}}</td>
+                        <td>{{articulo.existencia}}</td>
+                        <td>{{articulo.imagen_articulo}}</td>
+
+                        <!--Envio el id del articulo a modificar-->
+                        <td><a href="{%url 'inventario_url:editar' articulo_id=articulo.id %}"><button type="button" class="btn btn-info">Editar</button></a></td>
+                    </tr>
+                    {% empty %}
+                    <h2 align="center" class="mb-4">No hay Articulos</h2>
+                    {%endfor%}
+            </tbody>
+        </table>
+    </tr>
+</thead>
+{%endblock%}

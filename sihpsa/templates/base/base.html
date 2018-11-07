@@ -35,7 +35,7 @@
 			<link rel="stylesheet" type="text/css" href="{% static 'css/miembro.css' %}">
 	</head>
 		<body style="background: white;">	
-			</img>
+			
 			{% block nav %}
 			<header id="header" >
 				<div class="header-top">
@@ -86,8 +86,8 @@
 				     	  <li><a href="#">Ventas</a></li>					               
 				          <li class="menu-has-children"><a href="#">Inventarios</a>
 				            <ul>
-				            	  <li><a href="#">Nuevo artículo</a></li>
-						          <li><a href="#">Ver artículos</a></li>
+				            	  <li><a href="{% url 'inventario_url:crear' %}">Nuevo artículo</a></li>
+						          <li><a href="{% url 'inventario_url:listar' %}">Ver artículos</a></li>
 				            </ul>
 				          </li>
 

@@ -1,0 +1,49 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block title %}SIHPSA|Crear Articulo{% endblock %}
+{%block content%}
+
+<form method="POST" action="" class="form-group mb-4 mt-4">
+
+    {%csrf_token%}
+
+
+    <div class="form-group">
+        <label>Nombre del Articulo</label>
+        {{form.nombre_articulo}}
+    </div>
+    <div class="form-group">
+        <label>Precio</label>
+        {{form.precio}}
+    </div>
+    <div class="form-group">
+        <label>Descripcion</label>
+        {{form.descripcion}}
+    </div>
+    <div class="form-group">
+        <label>Estado del Articulo</label>
+        {{form.estado}}
+    </div>
+    <div class="form-group">
+        <label>Existencias</label>
+        {{form.existencia}}
+    </div>
+    <div class="form-group">
+        <label>Categoria</label>
+        {{form.categoria}}
+    </div>
+    <div class="form-group">
+        <label>¿Se puede Vender?</label>
+        {{form.vendible}}
+    </div>
+    <div class="form-group">
+        <label>Elija Imagen del Articulo:</label>
+        <input type="file" name="imagen_articulo" class="btnSeleccionar">
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-info">Guardar</button>
+    </div>
+
+</form>
+
+{%endblock%}

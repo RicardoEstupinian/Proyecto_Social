@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -18,8 +19,9 @@ class Articulo(models.Model):
     estado = models.CharField(max_length=100)
     existencia = models.IntegerField()
     descripcion = models.CharField(max_length=200)
-    imagen_articulo = models.ImageField(upload_to='static/img', blank=True)
+    imagen_articulo = models.ImageField(upload_to='static/img', blank=True,null=True)
     vendible = models.BooleanField()
+
 
     def __str__(self):
         return self.nombre_articulo
