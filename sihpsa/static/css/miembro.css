@@ -1,3 +1,56 @@
 .multiple{
 	padding-left: 30px;
 }
+
+.perfil{
+	border-radius: 10px;
+}
+
+#prueba{
+	letter-spacing: 1px;
+	font-weight: bolder;
+	font-size: 15px;
+}
+
+#datos{
+	letter-spacing: 1px;
+	font-weight: bolder;
+	font-size: 20px;
+}
+
+.publicacion{
+	background: #9AE8DB; 
+	font-weight: bold;
+	/* color:white; */
+	border-radius: 20px;
+	position: relative;
+	top: 1em;
+	bottom: 1em;
+}
+input[type=submit]{
+	font-weight: bold;
+}
+.titulo{
+	background: #FFC59E;
+}
+.nav-item{
+	color:blue;
+	font-weight: bold;
+}
+.actives{
+	text-shadow: -1px -1px 1px #000, 1px 1px 1px #000, -1px 1px 1px #000, 1px -1px 1px #000;
+}
+
+.categorias{
+	padding-left: 12%;
+}
+
+#Buscador {
+  background: url(https://cdn0.iconfinder.com/data/icons/slim-square-icons-basics/100/basics-19-32.png) no-repeat 0px 5px;
+  background-size: 24px;
+  width: 500px;
+  border: transparent;
+  border-bottom: solid 1px #ccc;
+  padding: 10px 10px 10px 30px;
+  outline: none;
+}

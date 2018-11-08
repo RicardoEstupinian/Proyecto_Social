@@ -44,7 +44,7 @@ class Miembro(models.Model):
     carnet = models.CharField(max_length=7)
     nombre_m = models.CharField(max_length=100)
     apellido_m = models.CharField(max_length=100)
-    direccion = models.CharField(max_length=200)
+    direccion = models.CharField(max_length=500)
     fecha_nac = models.DateField()
     estatura = models.FloatField()
     num_contacto = models.CharField(max_length=15)

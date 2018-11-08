@@ -1,0 +1,145 @@
+{% extends 'base/base.html' %}
+{% block title %}
+Miembro-Editar
+{% endblock %}
+{% block content %}
+
+<form method="post" enctype='multipart/form-data'>
+		{% csrf_token %}
+
+		<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+        				<label>Nombres</label>
+				<input class="form-control" type="text"  value="{{ miembro.nombre_m}}" name="nombre_m" id="id_nombre_m">
+      				</div>
+      				<div class="col-md-6">
+        				<label >Apellidos</label>
+				<input class="form-control" type="text" value="{{ miembro.apellido_m}}" name="apellido_m" id="id_apellido_m">
+      				</div>
+    			</div>
+  			</div>
+		</div>
+		<br>
+		<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+        				<label >Carnet del miembro</label>
+				<input class="form-control" type="text" value="{{ miembro.carnet }}" name="carnet" id="id_miembro_carnet">
+      				</div>
+      				<div class="col-md-6">
+        				<label >Fecha de nacimiento</label>
+				<input class="form-control" type="date" value="{{ miembro.fecha_nac}}" name="fecha_nac" required>
+      				</div>
+    			</div>
+  			</div>
+		</div>
+		<br>
+		<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+        				<label >Estatura</label>
+				<input class="form-control" type="number" value="{{ miembro.estatura}}" step="0.01" name="estatura" min="0" required>
+      				</div>
+      				<div class="col-md-6">
+        				<label >Número telefónico</label>
+				<input class="form-control" type="text" value="{{ miembro.num_contacto}}" name="num_contacto" required>
+      				</div>
+    			</div>
+  			</div>
+		</div>
+		<br>
+		<div class="row">
+  			<div class="col-md-10">
+  				<label >Dirección</label>
+  				<textarea class="form-control" type="text" name="direccion" required>{{ miembro.direccion }}</textarea>
+  			</div>
+		</div>
+		<br><br>
+		<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+        				<hr><label >Cargo en la iglesia</label><hr>
+          					{{ form.cargo }}
+      				</div>
+      				<div class="col-md-6">
+        				<hr><label >Hermandad a la que pertenece</label><hr>
+          					{{ form.hermandad }}
+      				</div>
+    			</div>
+  			</div>
+		</div>
+		<br><br>
+		<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-4">
+        				<hr><label >Sacramentos realizados</label><hr>
+          					<div class="multiple">{{ form.sacramentos }}</div>
+      				</div>
+      				<div class="col-md-4">
+        				<hr><label>Uniformes</label><hr>
+							<div class="multiple">{{ form.uniformes }}</div>
+      				</div>
+      				<div class="col-md-4">
+        					<hr><label>Medallas</label><hr>
+						<div class="multiple">{{ form.medalla }}</div>
+      				</div>
+    			</div>
+    			<hr>
+  			</div>
+		</div>
+		<br>
+		<div class="row">
+		<div class="col-md-5">
+			<div class="form-group">
+				<label >Seleccionar foto de perfil</label>
+        {{ form.foto_m }}
+			</div>
+		</div>
+	</div>
+	<br><br>
+	<div class="col-md-10">
+	<hr>
+		<strong>Datos del encargado del miembro</strong>
+	<hr>
+	</div>
+	<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+        				<label >Nombre del encargado</label>
+				<input class="form-control" type="text" value="{{ miembro.nombre_encargado }}" name="nombre_encargado" required>
+      				</div>
+      				<div class="col-md-6">
+        				<label >Parentesco</label>
+				<input class="form-control" type="text" value="{{ miembro.parentesco }}" name="parentesco" required>
+      				</div>
+    			</div>
+  			</div>
+		</div>
+		<br>
+		<div class="row">
+  			<div class="col-md-10">
+    			<div class="row">
+      				<div class="col-md-6">
+        				<label >Número telefónico del encargado</label>
+				<input class="form-control" type="text" value="{{ miembro.num_encargado}}" name="num_encargado" required>
+      				</div>
+    			</div>
+  			</div>
+		</div>
+		<br>
+		<div class="row">
+  			<div class="col-md-10">
+        		<input class="btn btn-primary btn-lg btn-block" type="submit" name="btnGuardar" value="Registrar Miembro" id="id_miembro_guardar">
+  			</div>
+		</div>
+		<br>
+	</form>
+
+  {% endblock%}

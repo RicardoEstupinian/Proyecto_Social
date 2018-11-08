@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% load staticfiles %}
 {% block title %}
-Registro
+Miembro-Registrar
 {% endblock %}
 {% block content %}
 
@@ -150,17 +150,18 @@ Registro
     			<div class="row">
       				<div class="col-md-4">
         				<hr><label >Sacramentos realizados</label><hr>
-          					<div class="multiple">{{ form2.sacramentos }}<hr></div>
+          					<div class="multiple">{{ form2.sacramentos }}</div>
       				</div>
       				<div class="col-md-4">
         				<hr><label>Uniformes</label><hr>
-							<div class="multiple">{{ form2.uniformes }}<hr></div>
+							<div class="multiple">{{ form2.uniformes }}</div>
       				</div>
       				<div class="col-md-4">
         					<hr><label>Medallas</label><hr>
 						<div class="multiple">{{ form2.medalla }}</div>
       				</div>
     			</div>
+    			<hr>
   			</div>
 		</div>
 		<br>

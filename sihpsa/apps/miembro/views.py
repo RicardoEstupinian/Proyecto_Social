@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, UpdateView
 from apps.miembro.models import Miembro, Medalla, Sacramento, Uniforme 
 from apps.miembro.forms import MiembroForm, CuentaForm
 from django.urls import reverse_lazy, reverse
@@ -82,7 +82,38 @@ def registro(request):
 	return render(request, 'miembro/miembro_register.html', context)
 '''
 
-def registro(request):
+def miembro_administrations(request, cargo_m='Crucificador'):
+	if cargo_m == 'Crucificador':
+		activo = ['actives','','','','','']
+	if cargo_m == 'Jefe de disciplina':
+		activo = ['','actives','','','','']
+	if cargo_m == 'Custodia dolorosa':
+		activo = ['','','actives','','','']
+	if cargo_m == 'Ungidora':
+		activo = ['','','','actives','','']
+	if cargo_m == 'Jefe de grupo':
+		activo = ['','','','','actives','']
+	if cargo_m == 'Cargador mayor':
+		activo = ['','','','','','actives']
+
+	miembros = Miembro.objects.filter(cargo__nombre_cargo=cargo_m)
+
+	if request.method=='POST':
+		return redirect('miembro:administrar', cargo_m = cargo_m)
+
+	context = {
+		'miembros': miembros,
+		'cargo': cargo_m,
+		'activo': activo,
+	}
+	if 'q' in request.GET:
+		q=request.GET['q']
+		miembros = Miembro.objects.filter(nombre_m__icontains=q)
+		return render(request, 'miembro/miembro_administrations.html', {'miembros':miembros,'query':q})
+
+	return render(request, 'miembro/miembro_administrations.html', context)
+
+def miembro_register(request):
 	form = CuentaForm()
 	form2 = MiembroForm()
 	if request.is_ajax():
@@ -112,8 +143,6 @@ def registro(request):
 	if request.method=='POST':
 		form2 = MiembroForm(request.POST, request.FILES or None)
 		id_cuenta = User.objects.latest('id')
-		apellidos = id_cuenta.last_name.split(' ')
-		
 
 		if form2.is_valid():
 			instance2 = form2.save(commit=False)
@@ -131,3 +160,13 @@ def registro(request):
 		}
 	return render(request, 'miembro/miembro_register.html', context)
 
+def miembro_update(request, id_miembro):
+	miembro = Miembro.objects.get(id=id_miembro)
+	if request.method == 'GET':
+		form = MiembroForm(instance=miembro)
+	else:
+		form = MiembroForm(request.POST, request.FILES or None, instance=miembro)
+		if form.is_valid():
+			form.save()
+		return redirect('base')
+	return render(request, 'miembro/miembro_update.html', {'form':form, 'miembro':miembro,},)

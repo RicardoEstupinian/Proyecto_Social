@@ -5,93 +5,112 @@ Miembro-Perfil
 {% endblock %}
 {% block content %}
 {% if miembro %}
-	<div class="text-center" style="padding: 10px;">
-	<h3><strong>Perfil de:</strong>{{miembro.nombre_m}}</h3>
-	</div>
-	<div class="row">
-  			<div class="col-md-10 text-center">
-    			<img src="{{ miembro.foto_m.url }}" class="img-responsive" width="400">
+<div >
+	 <div class="col-md-12 p-3 mb-2 bg-light text-dark perfil text-center mt-2" id="prueba">
+      <h2>Perfil de: <th</td>{{miembro.nombre_m}}</h2>
+    </div>
+	<div class="col-md-12 p-3 mb-2 bg-light text-dark perfil">
+  			<div class="col-md-12 text-center">
+    			<img src="{{ miembro.foto_m.url }}" class="img-responsive perfil" width="400">
   			</div>
 		</div>
-	<div class="col-md-10 text-center">
-		<hr>
-			<strong>Datos del miembro</strong>
-		<hr>
+	<div class="col-md-12 p-3 mb-2 bg-light text-dark perfil text-center mt-2" id="datos">
+			<strong >Datos del miembro</strong>
 	</div>
-  			<div class="col-md-10">
-    			<div class="row">
+  <div id="prueba">
+  			<div class="col-md-12 p-3 mb-2 bg-light text-dark perfil">
+    			<div class="row ">
       				<div class="col-md-6">
-      					<div class="multiple">
+      					<div class="multiple mt-2">
         					<strong>Nombres: </strong>{{ miembro.nombre_m }}
         				</div>
+                <div class="multiple mt-4">
+                  <strong>Apellidos: </strong>{{ miembro.apellido_m}}
+                </div>
+                <div class="multiple mt-4">
+                  <strong>Carnet: </strong>{{ miembro.carnet }}
+                </div>
+                <div class="multiple mt-4">
+                  <strong>Fecha de nacimiento: </strong>{{ miembro.fecha_nac }}
+                </div>
+                <div class="multiple mt-4">
+                  <strong>Número de contacto: </strong>{{ miembro.num_contacto}}
+                </div>
       				</div>
       				<div class="col-md-6">
-      					<div class="multiple">
-        					<strong>Apellidos: </strong>{{ miembro.apellido_m}}
-        				</div>
+      					<div class="multiple mt-4">
+                  <strong>Estatura: </strong>{{ miembro.estatura}}
+                </div>
+                <div class="multiple mt-4">
+                  <strong>Hermandad a la que pertenece: </strong>{{ miembro.hermandad }}
+                </div>
+                <div class="multiple mt-4">
+                  <strong>Cargo: </strong>{{ miembro.cargo}}
+                </div>
+                <div class="multiple mt-4">
+                <strong>Dirección: </strong>{{ miembro.direccion }}
+              </div>
       				</div>
     			</div>
   			</div>
-  			<br>
-  			<div class="col-md-10">
-    			<div class="row">
-      				<div class="col-md-6">
-      					<div class="multiple">
-        					<strong>Carnet: </strong>{{ miembro.carnet }}
-        				</div>
-      				</div>
-      				<div class="col-md-6">
-      					<div class="multiple">
-        					<strong>Estatura: </strong>{{ miembro.estatura}}
-        				</div>
-      				</div>
-    			</div>
-  			</div>
-  			<br>
-  			<div class="col-md-10">
-    			<div class="row">
-      				<div class="col-md-6">
-      					<div class="multiple">
-        					<strong>Fecha de nacimiento: </strong>{{ miembro.fecha_nac }}
-        				</div>
-      				</div>
-      				<div class="col-md-6">
-      					<div class="multiple">
-        					<strong>Número de contacto: </strong>{{ miembro.num_contacto}}
-        				</div>
-      				</div>
-    			</div>
-  			</div>
-  			<br>
-  			<div class="col-md-10">
-    			<div class="row">
-      				<div class="col-md-6">
-      					<div class="multiple">
-        					<strong>Dirección: </strong>{{ miembro.direccion }}
-        				</div>
-      				</div>
-      				<div class="col-md-6">
-      					<div class="multiple">
-        					<strong>Cargo: </strong>{{ miembro.cargo}}
-        				</div>
-      				</div>
-    			</div>
-  			</div>
-  			<br>
-  			<div class="col-md-10">
-    			<div class="row">
-      				<div class="col-md-6">
-      					<div class="multiple">
-        					<strong>Hermandad a la que pertenece: </strong>{{ miembro.hermandad }}
-        				</div>
-      				</div>
-      				<div class="col-md-6">
-      					<div class="multiple">
-        					<strong>Uniformes: </strong>{{ miembro.uniformes.all }}
-        				</div>
-      				</div>
-    			</div>
-  			</div>
+        <div class="col-md-12">
+          <div class="row">
+              <div class="col-md-4 p-3 ml-1 mr-3 mb-2 bg-light text-dark perfil">
+                <div class="multiple">
+                  <strong>Sacramentos: </strong>
+                  {% for sacramento in miembro.sacramentos.all %}
+                      <br>• {{ sacramento.nombre_sacramento }}
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="col-md-4 p-4 ml-4 mr-3 mb-2 bg-light text-dark perfil">
+                <div class="multiple">
+                  <strong>Uniformes: </strong>
+                  {% for uniforme in miembro.uniformes.all %}
+                      <br>• {{ uniforme.tipo }}
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="col-md-3 p-3 ml-4 mb-2 bg-light text-dark perfil">
+                <div class="multiple">
+                  <strong>Medallas: </strong>
+                  {% for medalla in miembro.medalla.all %}
+                      <br>• {{ medalla.color }}
+                  {% endfor %}
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-12 p-3 mb-2 bg-light text-dark perfil text-center" id="datos">
+      <strong >Datos del pariente</strong>
+  </div>
+        <div class="col-md-12 p-3 mb-4 bg-light text-dark perfil">
+        <div class="col-md-12">
+          <div class="row">
+              <div class="col-md-6">
+                <div class="multiple mt-4">
+                  <strong>Nombre del encagado: </strong>{{ miembro.nombre_encargado }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="multiple mt-4">
+                  <strong>Parentesco: </strong>{{ miembro.parentesco}}
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+              <div class="col-md-6">
+                <div class="multiple mt-4">
+                  <strong>Número del encargado: </strong>{{ miembro.num_encargado }}
+                </div>
+              </div>
+          </div>
+        </div>
+        </div>
+        </div>
+        </div>
 {% else %}
 	<h1 class="text-center">No existe el miembro</h1>
 {% endif %}

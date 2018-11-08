@@ -1,0 +1,92 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block title %}
+Miembro-Administración
+{% endblock %}
+<link rel="stylesheet" href="{% static 'css/miembro.css' %}">
+{% block content %}
+<br><br>
+<form action="" method="get">
+        <div class="row categorias">
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="search" placeholder="Buscar por nombre" id="Buscador" name="q"/>
+                    </div>
+                    <div class="col-md-6 categorias">
+                        <input class="btn btn-secondary" type="submit" name="Buscar" value="Buscar/Ver todos">
+                    </div>
+                </div>
+            </div>
+        </div>
+</form>
+    <br><br>
+    <div >
+    <ul class="nav nav-tabs row mt-3 categorias">
+        <li class="nav-item col-3 text-center">
+            <a href="{% url 'miembro:administrar' 'Crucificador' %}" class="nav-link {{activo.0}}" id="a1">Crucificador</a>
+        </li>
+        <li class="nav-item col-3 text-center">
+            <a href="{% url 'miembro:administrar' 'Jefe de disciplina'%}" class="nav-link  {{activo.1}} " id="a1">Jefe de disciplina</a>
+        </li>
+        <li class="nav-item col-3 text-center">
+            <a href="{% url 'miembro:administrar' 'Custodia dolorosa'%}" class="nav-link {{activo.2}} " id="a1">Custodia dolorosa</a>
+        </li>
+</ul>
+<ul class="nav nav-tabs row mt-3 categorias">
+        <li class="nav-item col-3 text-center">
+            <a href="{% url 'miembro:administrar' 'Ungidora' %}" class="nav-link {{activo.3}} " id="a1">Ungidora</a>
+        </li>
+        <li class="nav-item col-3 text-center">
+            <a href="{% url 'miembro:administrar' 'Jefe de grupo'%}" class="nav-link {{activo.4}} " id="a1">Jefe de grupo</a>
+        </li>
+        <li class="nav-item col-3 text-center">
+            <a href="{% url 'miembro:administrar' 'Cargador mayor'%}" class="nav-link {{activo.5}} " id="a1">Cargador mayor</a>
+        </li>
+</ul>
+</div>
+
+<div class="container_sim">
+    {% if query %}
+        {% if miembros %}
+            <h2 class="bg-warning text-secondary mt-3 text-center p-2" style="border-radius: 15px;">Resultados: {{miembros|length}} miembro{{miembros|pluralize}} con el nombre "{{ query }}"</h2>
+        {% else %}
+            <h2 class="bg-warning text-secondary mt-3 text-center p-2" style="border-radius: 15px;" >No se encontro ningun miembro con el nombre "{{query}}"</h2>
+        {% endif %}    
+    {% elif cargo %}
+        {% if miembros %}
+            <h2 class="bg-warning text-secondary mt-3 text-center p-2" style="border-radius: 15px;">Cargo: {{ cargo }}</h2>
+        {% else %}
+            <h2 class="bg-warning text-secondary mt-3 text-center p-2" style="border-radius: 15px;" >No se encuentran miembros con este cargo</h2>
+        {% endif %}
+    {% endif %}
+
+    {% for miembro in miembros  %}
+    <div class="row publicacion my-3 mx-0">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3"><p id="prueba">Foto:</p><img src="{{ miembro.foto_m.url }}" width="100" id="id_perfil" style="padding-bottom: 2%;"></div>    
+                <div class="col-md-2"><p id="prueba">Nombres:</p><p>{{ miembro.nombre_m }}</p></div>
+                <div class="col-md-2"><p id="prueba">Apellidos:</p><p>{{ miembro.apellido_m }}</p></div>
+                <div class="col-md-5" style="padding-top: 2%;">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="{% url 'miembro:listar' miembro.id %}" title="" class="btn btn-block btn-primary font-weight-bold">Ver</a>
+                        </div>  
+                        <div class="col-md-4">
+                            <a href="{% url 'miembro:editar' miembro.id %}" title="" class="btn btn-block btn-success font-weight-bold">Editar</a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#" title="" class="btn btn-block btn-danger font-weight-bold">Bloquear</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+<br>
+
+{% endblock %}
