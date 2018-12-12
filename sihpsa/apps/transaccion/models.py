@@ -2,7 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-
 class Tesoreria(models.Model):
     nombre_tesoreria = models.CharField(max_length=50)
     saldo_tesoreria = models.FloatField()

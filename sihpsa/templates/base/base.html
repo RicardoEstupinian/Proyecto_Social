@@ -22,6 +22,8 @@
 		
 
 		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
+		<link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 			<!--CSS============================================= -->
 			<link rel="stylesheet" type="text/css" href="{% static 'base/css/linearicons.css' %}">
 			<link rel="stylesheet" type="text/css" href="{% static 'base/css/font-awesome.min.css' %}">
@@ -33,8 +35,10 @@
 			<link rel="stylesheet" type="text/css" href="{% static 'base/css/owl.carousel.css' %}">
 			<link rel="stylesheet" type="text/css" href="{% static 'base/css/main.css' %}">
 			<link rel="stylesheet" type="text/css" href="{% static 'css/miembro.css' %}">
+			{%block css%}{%endblock%}
+			
 	</head>
-		<body style="background: white;">	
+		<body id= "page-top"style="background: white;">	
 			
 			{% block nav %}
 			<header id="header" >
@@ -65,11 +69,11 @@
 				      </div>
 				      <nav id="nav-menu-container">
 				        <ul class="nav-menu">
-				          <li><a href="#">Home</a></li>
-				          <li><a href="#">Periodos Directivos</a></li>
-				          <li class="menu-has-children"><a href="#">Modulo Financiero</a>
+				          <li><a href="{% url 'base'%}">Home</a></li>
+				          <li><a href="{%url 'periodo_directivo'%}">Periodos Directivos</a></li>
+				          <li class="menu-has-children"><a href="{% url 'transaccion'%}">Modulo Financiero</a>
 				            <ul>
-				            	  <li><a href="#">Registrar Transacción</a></li>
+				            	  <li><a href="{% url 'transaccion'%}">Registrar Transacción</a></li>
 						          <li class="menu-has-children"><a href="#">Cuentas por Cobrar</a>
 						            <ul>
 						              <li><a href="#">Registrar cuenta por cobrar</a></li>
@@ -77,14 +81,14 @@
 						            </ul>
 						          </li>
 				            </ul>
-				            <li class="menu-has-children"><a href="#">Modulo de Afiliación</a>
+				            <li class="menu-has-children"><a href="{%url 'miembro:administrar' 'Crucificador' %}">Modulo de Afiliación</a>
 				            <ul>
-				            	  <li><a href="#">Nuevo miembro</a></li>
-						          <li><a href="#">Ver miembros</a></li>
+				            	  <li><a href="{%url 'miembro:registrar'  %}">Nuevo miembro</a></li>
+						          <li><a href="{%url 'miembro:administrar' 'Crucificador' %}">Ver miembros</a></li>
 				            </ul>
 				          </li>
 				     	  <li><a href="#">Ventas</a></li>					               
-				          <li class="menu-has-children"><a href="#">Inventarios</a>
+				          <li class="menu-has-children"><a href="{% url 'inventario_url:listar' %}">Inventarios</a>
 				            <ul>
 				            	  <li><a href="{% url 'inventario_url:crear' %}">Nuevo artículo</a></li>
 						          <li><a href="{% url 'inventario_url:listar' %}">Ver artículos</a></li>
@@ -151,5 +155,6 @@
 			<script type="text/javascript" src="{% static 'base/js/owl.carousel.min.js'%}"></script>
 			<script type="text/javascript" src="{% static 'base/js/mail-script.js'%}"></script>
 			<script type="text/javascript" src="{% static 'base/js/main.js'%}"></script>
+			{%block js%}{%endblock%}
 		</body>
 	</html>
