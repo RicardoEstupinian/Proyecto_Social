@@ -1,4 +1,5 @@
 from django.db import models
+from apps.miembro.models import Miembro
 
 # Create your models here.
 
@@ -33,3 +34,16 @@ class PeriodoAnualDirectivo(models.Model):
     final_periodo_anual = models.DateField()
     nombre_periodo = models.CharField(max_length=50)
     estado_periodo_anual=models.BooleanField()
+    directiva_asignada =models.BooleanField(default=False)
+
+class CargoDirectivo(models.Model):
+    nombre_cargo = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nombre_cargo
+
+class Directivo(models.Model):
+    miembro = models.ForeignKey(Miembro, null=True, blank=True, on_delete=models.CASCADE)
+    cargo = models.ForeignKey(CargoDirectivo, null=True, blank=True, on_delete=models.CASCADE)
+    periodo = models.ForeignKey(PeriodoAnualDirectivo, null=True, blank=True, on_delete=models.CASCADE)
+    estado = models.BooleanField(default=False)
