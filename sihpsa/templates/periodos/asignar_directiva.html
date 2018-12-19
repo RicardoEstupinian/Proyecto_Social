@@ -1,0 +1,162 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block title %}
+Asignación
+{% endblock %}
+{%block css%}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sb-admin.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/sb-admin.min.css' %}">
+	<!-- Page level plugin CSS-->
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.css' %}" type="text/css" rel="stylesheet">
+{%endblock%}
+{% block content %}
+<div id="wrapper">
+      <div id="content-wrapper">
+        <div class="container-fluid">
+          <!-- Area Chart Example-->
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-chart-area"></i>
+              Directiva</div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Carnet</th>
+                      <th>Nombres</th>
+                      <th>Apellidos</th>
+                      <th>Cargo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {%if directivos%}
+                    {%for d in directivos%}
+                    <tr>
+                      <td>{{d.miembro.carnet}}</td>
+                      <td>{{d.miembro.nombre_m}}</td>
+                      <td>{{d.miembro.apellido_m}}</td>
+                      <td>{{d.cargo}}</td>
+                    </tr>
+                    {%endfor%}
+                    {%else%}
+                    <tr>
+                      <td colspan="4"><p>No se han realizado asignaciones</p></td>
+                    </tr>
+                    {%endif%}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-footer small text-muted"></div>
+          </div>
+
+          <!-- DataTables Example -->
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-table"></i>
+              Miembros de la Hermandad - Asignar Cargo</div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Carnet</th>
+                      <th>Nombres</th>
+                      <th>Apellidos</th>
+                      <th>Asignar</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Carnet</th>
+                      <th>Nombres</th>
+                      <th>Apellidos</th>
+                      <th>Asignar</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    {%if miembros%}
+                    {%for m in miembros%}
+                    <tr>
+                      <td>{{m.carnet}}</td>
+                      <td>{{m.nombre_m}}</td>
+                      <td>{{m.apellido_m}}</td>
+                      <td>
+                        <a class="btn btn-primary" data-toggle = "modal"  href="#f{{forloop.counter}}" > Asignar</a>
+                      </td>
+                    </tr>
+                    <div class="modal fade" id="f{{forloop.counter}}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Header de ventana-->
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Asignar cargo</h5>
+                                    <button tyle="button" class="close" data-dismiss="modal" aria-hidden = "true">&times;</button>
+                                </div>
+                                <!-- Contenido de la ventana -->
+                                <div class="modal-body">
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                          <div class="col-md-12">
+                                          <label>Seleccione cargo Directivo</label>
+                                          {{ form.cargo }}
+                                          </div> 
+                                          </div>
+                                          <br><br> 
+                                          <input type="hidden" name="inputAsignar" value= "{{m.id}}">
+                                          <button type="submit" class="btn btn-primary" name="btnAsignar">Asignar cargo</button>
+                                          <button type="button" class="btn btn-default" data-dismiss= "modal" name="btnForm4">Cancelar</button>
+                                    </form>
+                                </div>
+
+                                <!-- Footer-->
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                    {%endif%}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-footer small text-muted">Actualizado {{fecha}}</div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+        
+      </div>
+      <!-- /.content-wrapper -->
+    </div>
+
+    <!-- /#wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+            
+{%block js%}
+	<script type="text/javascript" src="{% static 'js/sb-admin.js'%}"></script>
+	<script type="text/javascript" src="{% static 'js/sb-admin.min.js'%}"></script>
+	<!-- Bootstrap core JavaScript-->
+    <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script type="text/javascript" src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script type="text/javascript" src="{% static 'vendor/datatables/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/demo/datatables-demo.js' %}"></script>
+{%endblock%}
+{% endblock %}
+
+
+
+

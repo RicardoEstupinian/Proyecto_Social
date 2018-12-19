@@ -4,8 +4,6 @@
 Periodos Directivos
 {% endblock %}
 {%block css%}
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sb-admin.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sb-admin.min.css' %}">
 {%endblock%}	
 {% block content %}
     <div id="wrapper">
@@ -18,48 +16,70 @@ Periodos Directivos
             </div>
             <div class="col-lg-2">
             {% if user.is_staff == True %}
-            {% if cant == 0 %}
-            <a class="btn btn-success" href="{%url 'crear_periodo'%}" >Nuevo Periodo</a>
-            {% else %}
-            <a class="btn btn-default" data-toggle = "modal" href="#crearNo" >Nuevo Periodo</a>
+              {% if cant == 0 %}
+                <a class="btn btn-success" data-toggle = "modal" href="#crear" >Nuevo Periodo</a>
+              {% else %}
+                <a class="btn btn-default" data-toggle = "modal" href="#crearNo" >Nuevo Periodo</a>
+              {%endif%}
             {%endif%}
-            {%endif%}
+            </div>
           </div>
-        </div>
-        <br>
+          <br>
           {%if periodos %} 
-          {%for p in periodos%}
-          <div class="card">
-            <div class="card-header">
-              {{p.nombre_periodo}}
-            </div>
-            <div class="card-body">
-            <h5 class="card-title">Inicio de periodo: {{p.inicio_periodo_anual}} | final de periodo: {{p.final_periodo_anual}}</h5> 
-            {%if p.estado_periodo_anual%}
-            <p class="card-text">Estado:
-            Finalizado
-             </p>
-            {%else%}
-            <p class="card-text">Estado:
-            En curso
-            </p>
-            <a href="#" class="btn btn-danger">Cerrar Periodo</a>
-            {%endif%}
-            <a href="#" class="btn btn-primary">Ver registro</a>
-            </div>
-          </div>
-          <br>
-          {%endfor%}
+            {%for p in periodos%}
+              <div class="card">
+                <div class="card-header">
+                  {{p.nombre_periodo}}
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Inicio de periodo: {{p.inicio_periodo_anual}} &nbsp;| &nbsp;final de periodo: {{p.final_periodo_anual}}</h5> 
+                  {%if p.estado_periodo_anual%}
+                    <p class="card-text">Estado: Finalizado</p>
+                  {%else%}
+                    <p class="card-text">Estado: En curso </p>
+                    <a href="#{{p.id}}"  data-toggle = "modal" class="btn btn-danger">Cerrar periodo</a>
+                    <a href="{%url 'asignar_directiva'%}" class="btn btn-success">Asignar directiva</a>
+                  {%endif%}
+                  <a href="{%url 'periodo_list' p.id%}" class="btn btn-primary">Ver registro</a>
+                </div>
+              </div>
+              <br>
+              <!-- Ventana modal para cerrar periodo definitivamente--> 
+              <div class="modal fade" id="{{p.id}}">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <!-- Header de ventana-->
+                          <div class="modal-header">
+                              <h5 class="modal-title">Finalizar Periodo</h5>
+                              <button tyle="button" class="close" data-dismiss="modal" aria-hidden = "true">&times;</button>
+                          </div>
+                          <!-- Contenido de la ventana -->
+                          <div class="modal-body">
+                                  <p class="text-align">Confirmar si desea finalizar el periodo directivo actual.</p> 
+                          </div>
+                          <!--Footer-->
+                          <div class="modal-footer">
+                              <form method="POST">
+                                  {% csrf_token %}
+                                      <input type="hidden" name="idPeriodo" value= "{{p.id}}">
+                                      <button type="submit" class="btn btn-primary " name="btnCierre">Aceptar</button>
+                                      <button type="button" class="btn btn-default" data-dismiss= "modal" name="btnCerrar">Cancelar</button>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            {%endfor%}
           {%else%}
-          <div class="card">
-            <div class="card-header">
-              No existen periodos directivos.
+            <div class="card">
+              <div class="card-header">
+                No existen periodos directivos.
+              </div>
+              <div class="card-body">
+              <h5 class="card-title">No se encuentran periodos en la base de datos, por favor crear uno nuevo.</h5>
+              </div>
             </div>
-            <div class="card-body">
-            <h5 class="card-title">No se encuentran periodos en la base de datos, por favor crear uno nuevo.</h5>
-            </div>
-          </div>
-          <br>
+            <br>
           {%endif%}
         </div>
       </div>
@@ -84,9 +104,57 @@ Periodos Directivos
                             </div>
                         </div>
                     </div> 
+<!-- Ventana modal Para crear nuevo periodo--> 
+            <div class="modal fade" id="crear">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Header de ventana-->
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Nuevo Periodo</h5>
+                                    <button tyle="button" class="close" data-dismiss="modal" aria-hidden = "true">&times;</button>
+                                </div>
+                                <!-- Contenido de la ventana -->
+                                <div class="modal-body">
+                                  <form method="POST">
+                                    {% csrf_token %}
+                                    <div class="container">
+                                      <div class="row">
+                                        <div class="col-md-6">
+                                          <label >{{form_periodo.inicio_periodo_anual.label}}</label>
+                                          <input class="form-control" type="date" name="fecha_inicio" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                          <label >{{form_periodo.final_periodo_anual.label}}</label>
+                                          <input class="form-control" type="date" name="fecha_final" required>
+                                        </div>
+                                      </div>
+                                      <br>
+                                      <div class="row">
+                                        <div class="col-md-12">
+                                          <label for="{{form_periodo.nombre_periodo.name}}">{{form_periodo.nombre_periodo.label}}</label>
+                                          {{form_periodo.nombre_periodo}}
+                                        </div>      
+                                      </div>
+                                    </div>
+                                      <br>
+                                    <div class="row">
+                                      <div class="col-md-12">  
+                                      <button type="submit" class="btn btn-primary " name="btnNuevo">Nuevo Periodo</button>
+                                      
+                                      <button type="button" class="btn btn-default" data-dismiss= "modal" name="btnC">Cancelar</button>
+                                      </div>
+                                      </div>
+                                    </form>
+                                </div>
+                                <!--Footer-->
+                                <div class="modal-footer">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
 
 {%block js%}
-	<script type="text/javascript" src="{% static 'js/sb-admin.js'%}"></script>
-	<script type="text/javascript" src="{% static 'js/sb-admin.min.js'%}"></script>
+	
 {%endblock%}
 {% endblock %}
