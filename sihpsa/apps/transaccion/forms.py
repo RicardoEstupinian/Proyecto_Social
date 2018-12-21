@@ -1,16 +1,6 @@
 from django import forms
 from apps.transaccion.models import *
 
-cargos= (
-			('Presidente','Presidente'),
-			('Vice-Presidente','Vice-Presidente'),
-			('Secretario','Secretario'),
-			('Pro-Secretario','Pro-Secretario'),
-			('Tesorero','Tesorero'),
-			('Pro-Tesorero','Pro-Tesorero'),
-			('Sindico','Sindico'),
-			)
-
 class PeriodoForm(forms.ModelForm):
 
 	class Meta:
@@ -43,3 +33,4 @@ class DirectivoForm(forms.ModelForm):
 		widgets = {
 			'cargo': forms.Select(attrs= {'class' : 'form-control','value':'1'}),
 		}
+

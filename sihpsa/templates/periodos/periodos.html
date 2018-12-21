@@ -4,12 +4,152 @@
 Periodos
 {% endblock %}
 {%block css%}
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sb-admin.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sb-admin.min.css' %}">
+	
 {%endblock%}
+
 {% block content %}
+<div id="wrapper">
+      <div id="content-wrapper">
+        <div class="container-fluid">
+          <br>
+          <div class="row">
+            <div class="col-lg-10">
+              <p>Periodos de {{periodo_anual.nombre_periodo}} </p>
+            </div>
+            <div class="col-lg-2">
+            {% if user.is_staff == True %}
+              {% if cant == 0 %}
+                <a class="btn btn-success" data-toggle = "modal" href="#crear" >Nuevo Periodo</a>
+              {% else %}
+                <a class="btn btn-default" data-toggle = "modal" href="#crearNo" >Nuevo Periodo</a>
+              {%endif%}
+            {%endif%}
+            </div>
+          </div>
+          <br>
+          {%if periodo_lista %} 
+            {%for p in periodo_lista%}
+              <div class="card">
+                <div class="card-header">
+                  Periodo {{forloop.counter}}
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Inicio de periodo: {{p.inicio_periodo}} &nbsp;| &nbsp;final de periodo: {{p.final_periodo}}</h5> 
+                  {%if p.estado_periodo%}
+                    <p class="card-text">Estado: Finalizado</p>
+                  {%else%}
+                    <p class="card-text">Estado: En curso </p>
+                    <a href="#{{p.id}}"  data-toggle = "modal" class="btn btn-danger">Cerrar periodo</a>
+
+                  {%endif%}
+                  <a href="{%url 'periodo_seleccionado' p.id%}" class="btn btn-primary">Ver registro</a>
+                </div>
+              </div>
+              <br>
+              <!-- Ventana modal para cerrar periodo definitivamente--> 
+              <div class="modal fade" id="{{p.id}}">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <!-- Header de ventana-->
+                          <div class="modal-header">
+                              <h5 class="modal-title">Finalizar Periodo</h5>
+                              <button tyle="button" class="close" data-dismiss="modal" aria-hidden = "true">&times;</button>
+                          </div>
+                          <!-- Contenido de la ventana -->
+                          <div class="modal-body">
+                                  <p class="text-align">Confirmar si desea finalizar el periodo directivo actual.</p> 
+                          </div>
+                          <!--Footer-->
+                          <div class="modal-footer">
+                              <form method="POST">
+                                  {% csrf_token %}
+                                      <input type="hidden" name="idPeriodo" value= "{{p.id}}">
+                                      <button type="submit" class="btn btn-primary " name="btnCierre">Aceptar</button>
+                                      <button type="button" class="btn btn-default" data-dismiss= "modal" name="btnCerrar">Cancelar</button>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            {%endfor%}
+          {%else%}
+            <div class="card">
+              <div class="card-header">
+                No existen periodos del periodo: <b>{{periodo_anual.nombre_periodo}}</b>.
+              </div>
+              <div class="card-body">
+              <h5 class="card-title">No se encuentran periodos en la base de datos, por favor crear uno nuevo.</h5>
+              </div>
+            </div>
+            <br>
+          {%endif%}
+        </div>
+      </div>
+    </div>
+<!-- Ventana modal de advertencia de no poder crear un nuevo periodo--> 
+          <div class="modal fade" id="crearNo">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Header de ventana-->
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Nuevo Periodo</h5>
+                                    <button tyle="button" class="close" data-dismiss="modal" aria-hidden = "true">&times;</button>
+                                </div>
+                                <!-- Contenido de la ventana -->
+                                <div class="modal-body">
+                                        <p class="text-align">No puede abrir un nuevo periodo dado que existe un periodo actual vigente.</p> 
+                                </div>
+                                <!--Footer-->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss= "modal" name="btnModal">Aceptar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+<!-- Ventana modal Para crear nuevo periodo--> 
+            <div class="modal fade" id="crear">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Header de ventana-->
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Nuevo Periodo</h5>
+                                    <button tyle="button" class="close" data-dismiss="modal" aria-hidden = "true">&times;</button>
+                                </div>
+                                <!-- Contenido de la ventana -->
+                                <div class="modal-body">
+                                  <form method="POST">
+                                    {% csrf_token %}
+                                    <div class="container">
+                                      <div class="row">
+                                        <div class="col-md-6">
+                                          <label >Fecha de inicio:</label>
+                                          <input class="form-control" type="date" name="fecha_inicio" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                          <label >Fecha de finalización:</label>
+                                          <input class="form-control" type="date" name="fecha_final" required>
+                                        </div>
+                                      </div>
+                                      <br>
+                                    </div>
+                                      <br>
+                                    <div class="row">
+                                      <div class="col-md-12">  
+                                      <button type="submit" class="btn btn-primary " name="btnNuevo">Nuevo Periodo</button>
+                                      
+                                      <button type="button" class="btn btn-default" data-dismiss= "modal" name="btnC">Cancelar</button>
+                                      </div>
+                                      </div>
+                                    </form>
+                                </div>
+                                <!--Footer-->
+                                <div class="modal-footer">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
 {%block js%}
-	<script type="text/javascript" src="{% static 'js/sb-admin.js'%}"></script>
-	<script type="text/javascript" src="{% static 'js/sb-admin.min.js'%}"></script>
+	
 {%endblock%}
 {% endblock %}

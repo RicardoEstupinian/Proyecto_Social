@@ -27,6 +27,7 @@ Asignación
                       <th>Nombres</th>
                       <th>Apellidos</th>
                       <th>Cargo</th>
+                      <th>Cancelar</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -37,18 +38,55 @@ Asignación
                       <td>{{d.miembro.nombre_m}}</td>
                       <td>{{d.miembro.apellido_m}}</td>
                       <td>{{d.cargo}}</td>
+                      <td>
+                        <a class="btn btn-default" data-toggle = "modal"  href="#{{forloop.counter}}" > Cancelar</a>
+                      </td>
                     </tr>
+                    <div class="modal fade" id="{{forloop.counter}}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Header de ventana-->
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Cancelar asignación</h5>
+                                    <button tyle="button" class="close" data-dismiss="modal" aria-hidden = "true">&times;</button>
+                                </div>
+                                <!-- Contenido de la ventana -->
+                                <div class="modal-body">
+                                    <form method="POST">
+                                        {% csrf_token %} 
+                                          <p>Desea cancelar la asignación de <b>{{d.cargo}}</b> a {{d.miembro.nombre_m}} {{d.miembro.apellido_m}} </p>
+                                          <input type="hidden" name="inputCancelar" value= "{{d.id}}">
+                                          <button type="submit" class="btn btn-primary" name="btnCancelar">Aceptar</button>
+                                          <button type="button" class="btn btn-default" data-dismiss= "modal" name="btnForm4">Atrás</button>
+                                    </form>
+                                </div>
+
+                                <!-- Footer-->
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {%endfor%}
                     {%else%}
                     <tr>
-                      <td colspan="4"><p>No se han realizado asignaciones</p></td>
+                      <td colspan="5"><p>No se han realizado asignaciones</p></td>
                     </tr>
                     {%endif%}
                   </tbody>
                 </table>
               </div>
             </div>
-            <div class="card-footer small text-muted"></div>
+            <div class="card-footer small text-muted">
+              {% if directiva_completa %}
+              <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary " name="btnFinalizar">Finalizar Asignación</button>
+              </form>
+              {% else %}
+                <a class="btn btn-default" data-toggle = "modal" href="#crearNo" >Finalizar Asignación</a>
+              {%endif%}
+            </div>
           </div>
 
           <!-- DataTables Example -->
@@ -140,6 +178,27 @@ Asignación
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
+<!-- Ventana modal de advertencia de no poder finalizar asignacion--> 
+          <div class="modal fade" id="crearNo">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Header de ventana-->
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Asignar Directiva</h5>
+                                    <button tyle="button" class="close" data-dismiss="modal" aria-hidden = "true">&times;</button>
+                                </div>
+                                <!-- Contenido de la ventana -->
+                                <div class="modal-body">
+                                        <p class="text-align">Por favor finalizar la asignación de miembros de la directiva.</p> 
+                                </div>
+                                <!--Footer-->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss= "modal" name="btnModal">Aceptar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+            
             
 {%block js%}
 	<script type="text/javascript" src="{% static 'js/sb-admin.js'%}"></script>

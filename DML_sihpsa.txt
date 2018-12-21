@@ -43,3 +43,6 @@ INSERT INTO public.transaccion_cargodirectivo(
 INSERT INTO public.transaccion_cargodirectivo(
 	id, nombre_cargo)
 	VALUES (7, 'Sindico');
+INSERT INTO public.transaccion_cargodirectivo(
+	id, nombre_cargo)
+	VALUES (8, 'Auxiliar');

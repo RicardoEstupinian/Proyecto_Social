@@ -38,7 +38,12 @@ Periodos Directivos
                   {%else%}
                     <p class="card-text">Estado: En curso </p>
                     <a href="#{{p.id}}"  data-toggle = "modal" class="btn btn-danger">Cerrar periodo</a>
-                    <a href="{%url 'asignar_directiva'%}" class="btn btn-success">Asignar directiva</a>
+                  {%if p.directiva_asignada %}
+                  <a href="{%url 'asignar_directiva'%}" class="btn btn-success">Ver directiva</a>
+                  {%else%}
+                  <a href="{%url 'asignar_directiva'%}" class="btn btn-success">Asignar directiva</a>
+                  {%endif%}
+
                   {%endif%}
                   <a href="{%url 'periodo_list' p.id%}" class="btn btn-primary">Ver registro</a>
                 </div>
