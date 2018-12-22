@@ -88,15 +88,81 @@ def periodo_list(request,id):
 	}
 	return render(request, 'periodos/periodos.html',contexto)
 
-def periodo_seleccionado(request,id):
-	contexto ={
-	'prueba' : "hola",
-	}
-	return render(request, 'periodos/periodo_seleccionado.html',contexto)
-
 def transaccion(request):
+	periodo_actual = ''
+	periodo_anual = list()
+	periodos = list()
+	fecha = datetime.now()
+	transacciones = list()
+	form_transaccion = TransaccionForm()
+
+	periodo_anual_ex= PeriodoAnualDirectivo.objects.filter(estado_periodo_anual=False).exists()
+	if periodo_anual_ex:
+		periodo_anual = PeriodoAnualDirectivo.objects.get(estado_periodo_anual=False)
+		periodos_ex = Periodo.objects.filter(periodo_anual = periodo_anual,estado_periodo=True).exists()
+		if periodos_ex:
+			periodos = Periodo.objects.filter(periodo_anual = periodo_anual,estado_periodo=True).order_by('-id')
+
+		periodo_actual_ex = Periodo.objects.filter(estado_periodo=False).exists()
+		if periodo_actual_ex:
+			periodo_actual = Periodo.objects.get(estado_periodo=False)
+			tesoreria_ex = Tesoreria.objects.filter(nombre_tesoreria='Hermandad').exists()
+			if tesoreria_ex:
+				tesoreria = Tesoreria.objects.get(nombre_tesoreria='Hermandad')
+				transacciones_ex = Transaccion.objects.filter(periodo=periodo_actual,tesoreria=tesoreria).exists()
+				if transacciones_ex:
+					transacciones = Transaccion.objects.filter(periodo=periodo_actual,tesoreria=tesoreria).order_by('-id')
+
+	if request.method == 'POST':
+		if 'btnRegistrar' in request.POST:
+			periodo = periodo_actual
+			tesoreria = Tesoreria.objects.get(id = request.POST.get('tesoreria'))
+			fecha = request.POST.get('fecha_transaccion')
+			concepto = request.POST.get('concepto_transaccion')
+			tipo = request.POST.get('tipo')
+			monto = float(request.POST.get('monto_transaccion'))
+			if tesoreria.nombre_tesoreria == 'Todas':
+				monto_primicia = round(monto *0.25,2)
+				monto_social = round(monto*0.25,2)
+				monto_hermandad = round((monto-monto_primicia-monto_social),2)
+				create_transaccion(periodo,Tesoreria.objects.get(nombre_tesoreria='Primicia'),fecha,concepto,tipo,monto_primicia)
+				create_transaccion(periodo,Tesoreria.objects.get(nombre_tesoreria='Fondo Social'),fecha,concepto,tipo,monto_social)
+				create_transaccion(periodo,Tesoreria.objects.get(nombre_tesoreria='Hermandad'),fecha,concepto,tipo,monto_hermandad)
+			elif tesoreria.nombre_tesoreria == 'Primicia':
+				create_transaccion(periodo,tesoreria,fecha,concepto,tipo,monto)
+			elif tesoreria.nombre_tesoreria == 'Fondo Social':
+				create_transaccion(periodo,tesoreria,fecha,concepto,tipo,monto)
+			elif tesoreria.nombre_tesoreria == 'Hermandad':
+				create_transaccion(periodo,tesoreria,fecha,concepto,tipo,monto)
+			return redirect('transaccion')
+		if 'btnFactura' in request.POST:
+			periodo = periodo_actual
+			tesoreria = Tesoreria.objects.get(id = request.POST.get('tesoreria'))
+			fecha = request.POST.get('fecha_transaccion')
+			concepto = request.POST.get('concepto_transaccion')
+			tipo = request.POST.get('tipo')
+			monto = float(request.POST.get('monto_transaccion'))
+			if tesoreria.nombre_tesoreria == 'Todas':
+				monto_primicia = round(monto *0.25,2)
+				monto_social = round(monto*0.25,2)
+				monto_hermandad = round((monto-monto_primicia-monto_social),2)
+				create_transaccion(periodo,Tesoreria.objects.get(nombre_tesoreria='Primicia'),fecha,concepto,tipo,monto_primicia)
+				create_transaccion(periodo,Tesoreria.objects.get(nombre_tesoreria='Fondo Social'),fecha,concepto,tipo,monto_social)
+				create_transaccion(periodo,Tesoreria.objects.get(nombre_tesoreria='Hermandad'),fecha,concepto,tipo,monto_hermandad)
+			elif tesoreria.nombre_tesoreria == 'Primicia':
+				create_transaccion(periodo,tesoreria,fecha,concepto,tipo,monto)
+			elif tesoreria.nombre_tesoreria == 'Fondo Social':
+				create_transaccion(periodo,tesoreria,fecha,concepto,tipo,monto)
+			elif tesoreria.nombre_tesoreria == 'Hermandad':
+				create_transaccion(periodo,tesoreria,fecha,concepto,tipo,monto)
+			return redirect('transaccion')
 	contexto ={
-	'prueba' : "hola",
+	'periodo_actual' : periodo_actual,
+	'periodo_anual':periodo_anual,
+	'periodos':periodos,
+	'fecha':fecha,
+	'transacciones':transacciones,
+	'form_transaccion':form_transaccion,
 	}
 	return render(request, 'transaccion/transaccion.html',contexto)
 
@@ -162,3 +228,34 @@ def asignar_directiva(request):
 	'directiva_completa':directiva_completa,
 	}
 	return render(request, 'periodos/asignar_directiva.html',contexto)
+
+def periodo_seleccionado(request,id):
+	contexto ={
+	'prueba' : "hola",
+	}
+	return render(request, 'periodos/periodo_seleccionado.html',contexto)
+
+def create_transaccion(periodo,tesoreria,fecha,concepto,tipo,monto):
+	if tipo == 'Ingreso':
+		saldo = tesoreria.saldo_tesoreria + monto
+		tesoreria.saldo_tesoreria += monto
+		tesoreria.save()
+	elif tipo == 'Egreso':
+		saldo = tesoreria.saldo_tesoreria - monto
+		tesoreria.saldo_tesoreria -= monto
+		tesoreria.save()
+	transaccion_nueva = Transaccion(
+		periodo= periodo,
+		tesoreria=tesoreria,
+		fecha_transaccion= fecha,
+		concepto_transaccion = concepto,
+		tipo= tipo,
+		monto_transaccion = monto,
+		saldo_transaccion= saldo
+		)
+	transaccion_nueva.save()
+	return
+
+
+
+

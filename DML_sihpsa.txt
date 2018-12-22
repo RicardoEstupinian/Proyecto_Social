@@ -46,3 +46,16 @@ INSERT INTO public.transaccion_cargodirectivo(
 INSERT INTO public.transaccion_cargodirectivo(
 	id, nombre_cargo)
 	VALUES (8, 'Auxiliar');
+
+INSERT INTO public.transaccion_tesoreria(
+	id, nombre_tesoreria, saldo_tesoreria)
+	VALUES (1, 'Hermandad', 0.00);
+INSERT INTO public.transaccion_tesoreria(
+	id, nombre_tesoreria, saldo_tesoreria)
+	VALUES (2, 'Fondo Social', 0.00);
+INSERT INTO public.transaccion_tesoreria(
+	id, nombre_tesoreria, saldo_tesoreria)
+	VALUES (3, 'Primicia', 0.00);
+INSERT INTO public.transaccion_tesoreria(
+	id, nombre_tesoreria, saldo_tesoreria)
+	VALUES (4, 'Todas', 0.00);

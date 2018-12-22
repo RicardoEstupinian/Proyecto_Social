@@ -34,3 +34,28 @@ class DirectivoForm(forms.ModelForm):
 			'cargo': forms.Select(attrs= {'class' : 'form-control','value':'1'}),
 		}
 
+class TransaccionForm(forms.ModelForm):
+
+	class Meta:
+		model = Transaccion
+		fields = [
+			'tesoreria',
+			'fecha_transaccion',
+			'concepto_transaccion',
+			'tipo',
+			'monto_transaccion',
+		]
+		labels = {
+			'tesoreria': 'Tesorería destino/origen:',
+			'fecha_transaccion':'Fecha: ',
+			'concepto_transaccion':'Concepto: ',
+			'tipo': 'Tipo: ',
+			'monto_transaccion':'Monto: ',
+		}
+		widgets = {
+			'tesoreria': forms.Select(attrs= {'class' : 'form-control','value':'1'}),
+			'fecha_transaccion': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Seleccione la fecha'}),
+			'concepto_transaccion': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el concepto de la transacción'}),
+			'tipo': forms.Select(attrs= {'class' : 'form-control','value':'1'}, choices=(('Ingreso','Ingreso'),('Egreso','Egreso'),)),
+			'monto_transaccion': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el monto'}),
+		}

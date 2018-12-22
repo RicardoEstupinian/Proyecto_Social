@@ -31,6 +31,7 @@ class Transaccion(models.Model):
     concepto_transaccion = models.CharField(max_length=100)
     tipo = models.CharField(max_length=50)
     monto_transaccion = models.FloatField()
+    saldo_transaccion = models.FloatField() 
 
 class CargoDirectivo(models.Model):
     nombre_cargo = models.CharField(max_length=50)
