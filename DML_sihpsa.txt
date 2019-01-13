@@ -1,0 +1,61 @@
+INSERT INTO miembro_medalla values(1,'Grenn');
+INSERT INTO miembro_medalla values(2,'Purple');
+
+INSERT INTO miembro_sacramento values(1,'Bautizo');
+INSERT INTO miembro_sacramento values(2,'Confesion');
+INSERT INTO miembro_sacramento values(3,'Confirmacion');
+INSERT INTO miembro_sacramento values(4,'Matrimonio');
+
+INSERT INTO miembro_hermandad values(1,'Hermandad Infantil');
+INSERT INTO miembro_hermandad values(2,'Hermandad Adolescente');
+INSERT INTO miembro_hermandad values(3,'Hermandad Juvenil');
+INSERT INTO miembro_hermandad values(4,'Hermandad Adultos');
+
+INSERT INTO miembro_uniforme values(1,'Blanco');
+INSERT INTO miembro_uniforme values(2,'Azul');
+INSERT INTO miembro_uniforme values(3,'Morado');
+INSERT INTO miembro_uniforme values(4,'Negro');
+INSERT INTO miembro_uniforme values(5,'Verde');
+
+INSERT INTO miembro_cargo values(1,'Crucificador', 'tipo 1');
+INSERT INTO miembro_cargo values(2,'Ordenanza', 'tipo 2');
+INSERT INTO miembro_cargo values(3,'Tesorero', 'tipo 3');
+INSERT INTO miembro_cargo values(4,'Lider', 'tipo 4');
+
+INSERT INTO public.transaccion_cargodirectivo(
+	id, nombre_cargo)
+	VALUES (1, 'Presidente');
+INSERT INTO public.transaccion_cargodirectivo(
+	id, nombre_cargo)
+	VALUES (2, 'Vice-Presidente');
+INSERT INTO public.transaccion_cargodirectivo(
+	id, nombre_cargo)
+	VALUES (3, 'Secretario');
+INSERT INTO public.transaccion_cargodirectivo(
+	id, nombre_cargo)
+	VALUES (4, 'Pro-Secretario');
+INSERT INTO public.transaccion_cargodirectivo(
+	id, nombre_cargo)
+	VALUES (5, 'Tesorero');
+INSERT INTO public.transaccion_cargodirectivo(
+	id, nombre_cargo)
+	VALUES (6, 'Pro-Tesorero');
+INSERT INTO public.transaccion_cargodirectivo(
+	id, nombre_cargo)
+	VALUES (7, 'Sindico');
+INSERT INTO public.transaccion_cargodirectivo(
+	id, nombre_cargo)
+	VALUES (8, 'Auxiliar');
+
+INSERT INTO public.transaccion_tesoreria(
+	id, nombre_tesoreria, saldo_tesoreria)
+	VALUES (1, 'Hermandad', 0.00);
+INSERT INTO public.transaccion_tesoreria(
+	id, nombre_tesoreria, saldo_tesoreria)
+	VALUES (2, 'Fondo Social', 0.00);
+INSERT INTO public.transaccion_tesoreria(
+	id, nombre_tesoreria, saldo_tesoreria)
+	VALUES (3, 'Primicia', 0.00);
+INSERT INTO public.transaccion_tesoreria(
+	id, nombre_tesoreria, saldo_tesoreria)
+	VALUES (4, 'Todas', 0.00);

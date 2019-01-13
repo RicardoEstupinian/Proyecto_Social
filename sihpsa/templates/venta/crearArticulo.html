@@ -3,46 +3,64 @@
 {% block title %}SIHPSA|Crear Articulo{% endblock %}
 {%block content%}
 
-<form method="POST" action="" class="form-group mb-4 mt-4">
+<form method="POST" action="" class="form-group mb-4 mt-4 ml-4 mr-4">
 
     {%csrf_token%}
 
-
-    <div class="form-group">
-        <label>Nombre del Articulo</label>
+    <div class="row alert alert-info">
+        <div class="col-6">
+            <div>
+        <label><strong>Nombre del Articulo</strong></label>
         {{form.nombre_articulo}}
     </div>
     <div class="form-group">
-        <label>Precio</label>
+        <label><strong>Precio</strong></label>
         {{form.precio}}
     </div>
     <div class="form-group">
-        <label>Descripcion</label>
+        <label><strong>Descripcion</strong></label>
         {{form.descripcion}}
     </div>
     <div class="form-group">
-        <label>Estado del Articulo</label>
+        <label><strong>Estado del Articulo</strong></label>
         {{form.estado}}
     </div>
-    <div class="form-group">
-        <label>Existencias</label>
+            
+        </div>
+
+
+        <div class="col-6">
+            <div class="form-group">
+        <label><strong>Existencias</strong></label>
         {{form.existencia}}
     </div>
     <div class="form-group">
-        <label>Categoria</label>
+        <label><strong>Categoria</strong></label>
         {{form.categoria}}
     </div>
     <div class="form-group">
-        <label>¿Se puede Vender?</label>
+        <label><strong>¿Se puede Vender?</strong></label>
         {{form.vendible}}
     </div>
     <div class="form-group">
-        <label>Elija Imagen del Articulo:</label>
-        <input type="file" name="imagen_articulo" class="btnSeleccionar">
+        
+        <label><strong>Elija Imagen del Articulo:</strong></label>
+        <!--
+        <input type="file" name="imagen_articulo" class="btnSeleccionar">-->
+
+        {{form.imagen_articulo}}
+
     </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-info">Guardar</button>
+            
+        </div>
+
+
+    
+    <div class="form-group text-center col-12 mt-4">
+        <button type="submit" class="btn btn-info btn-lg">Guardar Cambios</button>
     </div>
+        
+    </div> 
 
 </form>
 

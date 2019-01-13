@@ -36,4 +36,5 @@ class ArticuloForm(forms.ModelForm):
             'existencia': forms.TextInput(attrs={'class': 'form-control'}),
             'descripcion': forms.TextInput(attrs={'class': 'form-control'}),
             'vendible': forms.NullBooleanSelect(attrs={'class': 'form-control'}),
+            'imagen_articulo': forms.FileInput(),
         }
