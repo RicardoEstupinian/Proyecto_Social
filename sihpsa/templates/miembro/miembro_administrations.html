@@ -6,7 +6,6 @@ Miembro-Administración
 <link rel="stylesheet" href="{% static 'css/miembro.css' %}">
 {% block content %}
 <br><br>
-
 <form action="" method="get">
         <div class="row categorias">
             <div class="col-md-10">
@@ -72,17 +71,62 @@ Miembro-Administración
                 <div class="col-md-2"><p id="prueba">NOMRBES</p><p>{{ miembro.nombre_m }}</p></div>
                 <div class="col-md-4" style="padding-top: 2%;">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <a href="{% url 'miembro:ver' miembro.id %} " title="" class="btn btn-block btn-primary font-weight-bold">Ver</a>
                         </div>  
                         <div class="col-md-4">
                             <a href="{% url 'miembro:editar' miembro.id %} " title="" class="btn btn-block btn-success font-weight-bold">Editar</a>
                         </div>
-                        <div class="col-md-4">
-                            <a href="#" title="" class="btn btn-block btn-danger font-weight-bold">Bloquear</a>
+                        <div class="col-md-5">
+                            {% if miembro.cuenta.is_active %}
+                            <a class="btn btn-block btn-danger font-weight-bold" data-toggle = "modal"  href="#{{forloop.counter}}" >Bloquear</a>
+                            {% else %}
+                            <a class="btn btn-block btn-info font-weight-bold" data-toggle = "modal"  href="#{{forloop.counter}}" >Desbloquear</a>
+                            {% endif %}
+
+                            <!-- Ventana Emergente para editar formulario-->
+                            <div class="modal fade" id="{{forloop.counter}}">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <!-- Header de ventana-->
+                                        <div class="modal-header">
+                                            {% if miembro.cuenta.is_active %}
+                                                <h2 class="modal-title">Bloquear miembro</h2>
+                                            {% else %}
+                                                <h2 class="modal-title">Desbloquear miembro</h2>
+                                            {% endif %}
+                                            <button tyle="button" class="close" data-dismiss="modal" aria-hidden = "true">&times;</button>
+                                        </div>
+
+                                        <!-- Contenido de la ventana -->
+                                        <div class="modal-body">
+                                            {% if miembro.cuenta.is_active %}
+                                                <h3 class="text-center">¿ Desea bloquear a {{miembro.nombre_m}} {{miembro.apellido_m}} ?</h3>
+                                            {% else %}
+                                                <h3 class="text-center">¿ Desea desbloquear a {{miembro.nombre_m}} {{miembro.apellido_m}} ?</h3>
+                                            {% endif %}
+                                        </div>
+
+                                        <!-- Footer-->
+                                        <div class="modal-footer">
+                                            <form method="post">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="idBloquear" value= "{{miembro.cuenta.id}}">
+                                                {% if miembro.cuenta.is_active %}
+                                                    <button type="submit" class="btn btn-danger" name="btnBloquear">Bloquear</button>
+                                                {% else %}
+                                                    <button type="submit" class="btn btn-info" name="btnBloquear">Desbloquear</button>
+                                                {% endif %}
+                                                
+                                                <button type="button" class="btn btn-secondary" data-dismiss= "modal">Cancelar</button>
+                                            </form> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -90,5 +134,4 @@ Miembro-Administración
     {% endfor %}
     </div>
 <br>
-
 {% endblock %}

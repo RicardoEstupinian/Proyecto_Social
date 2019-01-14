@@ -31,57 +31,6 @@ def carnet(request):
 def miembro_view(request, id_miembro):
 	miembro = Miembro.objects.get(id=id_miembro)
 	return render(request, 'miembro/miembro_view.html', {'miembro':miembro,})
-'''
-def registro(request):
-	form = CuentaForm()
-	form2 = MiembroForm()
-	if request.is_ajax():
-		form = CuentaForm(request.POST)
-		if form.is_valid():
-			instance = form.save(commit=False)
-			instance.user = request.user
-			instance.save()
-
-			data={
-			'message':'form is saved',
-			}
-	if request.method=='POST':
-		form2 = MiembroForm(request.POST, request.FILES or None)
-		id_cuenta = User.objects.latest('id')
-		apellidos = id_cuenta.last_name.split(' ')
-		year = datetime.datetime.now().year
-		number1 = random.randrange(10)
-		number2 = random.randrange(10)
-		number3 = random.randrange(10)
-
-		ap1=apellidos[0]
-		ap2=apellidos[1]
-		year_str = str(year)
-		number1_str = str(number1)
-		number2_str = str(number2)
-		number3_str = str(number3)
-
-		carnet = ap1[0]+ap2[0]+year_str[2:4]+number1_str+number2_str+number3_str
-
-		if form2.is_valid():
-			instance2 = form2.save(commit=False)
-			instance2.user = request.user
-			instance2.save()
-			if 'btnGuardar' in request.POST:
-				miembro = Miembro.objects.latest('id')
-				miembro.cuenta_id = id_cuenta.id
-				miembro.carnet = carnet
-				miembro.save()
-			data={
-			'message':'form is saved',
-			}
-			return redirect('base')
-	context={
-		'form': form,
-		'form2': form2,
-		}
-	return render(request, 'miembro/miembro_register.html', context)
-'''
 
 def miembro_administrations(request, cargo_m='Todos'):
 	activo=''
@@ -100,21 +49,30 @@ def miembro_administrations(request, cargo_m='Todos'):
 
 	miembros = Miembro.objects.filter(cargo__nombre_cargo=cargo_m).order_by('apellido_m')
 
-	if request.method=='POST':
-		return redirect('miembro:administrar', cargo_m = cargo_m)
-
 	if cargo_m == 'Todos':
 		miembros = Miembro.objects.all().order_by('apellido_m')
+
+	if request.method=='POST':
+		if 'btnBloquear' in request.POST:
+			id_user=request.POST.get('idBloquear')
+			user = User.objects.get(id=id_user)
+			if user.is_active:
+				user.is_active=False
+			else:
+				user.is_active=True
+			user.save()
+			return redirect('miembro:administrar', cargo_m = cargo_m)
+
+	if 'q' in request.GET:
+		q=request.GET['q']
+		miembros = Miembro.objects.filter(nombre_m__icontains=q).order_by('apellido_m')
+		return render(request, 'miembro/miembro_administrations.html', {'miembros':miembros,'query':q})
 
 	context = {
 		'miembros': miembros,
 		'cargo': cargo_m,
 		'activo': activo,
 	}
-	if 'q' in request.GET:
-		q=request.GET['q']
-		miembros = Miembro.objects.filter(nombre_m__icontains=q).order_by('apellido_m')
-		return render(request, 'miembro/miembro_administrations.html', {'miembros':miembros,'query':q})
 
 	return render(request, 'miembro/miembro_administrations.html', context)
 
@@ -176,10 +134,7 @@ def miembro_update(request, id_miembro):
 		return redirect('base')
 	return render(request, 'miembro/miembro_update.html', {'form':form, 'miembro':miembro,},)
 
-def buscar_miembro(request):
-	q=''
-	miembros=''
-	if 'q' in request.GET:
-		q=request.GET['q']
-		miembros = Miembro.objects.filter(nombre_m__icontains=q).order_by('apellido_m')
-	return render(request, 'miembro/buscar.html', {'miembros':miembros,'query':q})
+def miembro_lock(request, miembro_id):
+	miembro = Miembro.objects.get(id=miembro_id)
+	miembro.is_active=False
+	miembro.save()
