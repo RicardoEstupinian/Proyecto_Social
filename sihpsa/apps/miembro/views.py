@@ -8,6 +8,7 @@ from django.http import HttpResponse, JsonResponse
 # Create your views here.
 import datetime
 import random
+
 def carnet(request):
 	apellidos = User.objects.latest('id').last_name.split(' ')
 	year = datetime.datetime.now().year
@@ -27,9 +28,9 @@ def carnet(request):
 	return HttpResponse(carnet)
 
 
-def miembro_list(request, id_miembro):
+def miembro_view(request, id_miembro):
 	miembro = Miembro.objects.get(id=id_miembro)
-	return render(request, 'miembro/miembro_list.html', {'miembro':miembro,})
+	return render(request, 'miembro/miembro_view.html', {'miembro':miembro,})
 '''
 def registro(request):
 	form = CuentaForm()
@@ -82,7 +83,8 @@ def registro(request):
 	return render(request, 'miembro/miembro_register.html', context)
 '''
 
-def miembro_administrations(request, cargo_m='Crucificador'):
+def miembro_administrations(request, cargo_m='Todos'):
+	activo=''
 	if cargo_m == 'Crucificador':
 		activo = ['actives','','','','','']
 	if cargo_m == 'Jefe de disciplina':
@@ -96,10 +98,13 @@ def miembro_administrations(request, cargo_m='Crucificador'):
 	if cargo_m == 'Cargador mayor':
 		activo = ['','','','','','actives']
 
-	miembros = Miembro.objects.filter(cargo__nombre_cargo=cargo_m)
+	miembros = Miembro.objects.filter(cargo__nombre_cargo=cargo_m).order_by('apellido_m')
 
 	if request.method=='POST':
 		return redirect('miembro:administrar', cargo_m = cargo_m)
+
+	if cargo_m == 'Todos':
+		miembros = Miembro.objects.all().order_by('apellido_m')
 
 	context = {
 		'miembros': miembros,
@@ -108,7 +113,7 @@ def miembro_administrations(request, cargo_m='Crucificador'):
 	}
 	if 'q' in request.GET:
 		q=request.GET['q']
-		miembros = Miembro.objects.filter(nombre_m__icontains=q)
+		miembros = Miembro.objects.filter(nombre_m__icontains=q).order_by('apellido_m')
 		return render(request, 'miembro/miembro_administrations.html', {'miembros':miembros,'query':q})
 
 	return render(request, 'miembro/miembro_administrations.html', context)
@@ -170,3 +175,11 @@ def miembro_update(request, id_miembro):
 			form.save()
 		return redirect('base')
 	return render(request, 'miembro/miembro_update.html', {'form':form, 'miembro':miembro,},)
+
+def buscar_miembro(request):
+	q=''
+	miembros=''
+	if 'q' in request.GET:
+		q=request.GET['q']
+		miembros = Miembro.objects.filter(nombre_m__icontains=q).order_by('apellido_m')
+	return render(request, 'miembro/buscar.html', {'miembros':miembros,'query':q})
