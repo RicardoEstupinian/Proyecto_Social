@@ -3,7 +3,7 @@
 {% block title %}SIHPSA|Crear Articulo{% endblock %}
 {%block content%}
 
-<form method="POST" action="" class="form-group mb-4 mt-4 ml-4 mr-4">
+<form method="POST" action="" class="form-group mb-4 mt-4 ml-4 mr-4" enctype='multipart/form-data'>
 
     {%csrf_token%}
 
@@ -47,7 +47,6 @@
         <label><strong>Elija Imagen del Articulo:</strong></label>
         <!--
         <input type="file" name="imagen_articulo" class="btnSeleccionar">-->
-
         {{form.imagen_articulo}}
 
     </div>
