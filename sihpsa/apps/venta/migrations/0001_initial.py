@@ -50,7 +50,4 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to='venta.Categoria'),
         ),
     ]
-<<<<<<< HEAD
-=======
 
->>>>>>> d15634ef12683c2c1cdc066e01d93474798d5c2d
