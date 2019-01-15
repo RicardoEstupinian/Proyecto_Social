@@ -27,6 +27,7 @@ urlpatterns = [
     path('accounts/login/', login, {'template_name':'login/login.html'}, name='login'),
     path('logout/', logout_then_login, name='logout'),
     path('modulo-financiero/',include('apps.transaccion.urls')),
+    path('cuentas-x-cobrar/',include('apps.cuentasxcobrar.urls')),
     
     path('inventario/',include(('apps.venta.urls','venta'),namespace='inventario_url')),
 ]
