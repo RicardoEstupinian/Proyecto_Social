@@ -163,6 +163,10 @@ Modulo Financiero
             <button type="submit" class="btn btn-default " name="btnFactura">Generar Factura</button>
             </div>
             </div>
+            {%else%}
+            <div class="alert alert-info" role="alert">
+              Para poder registrar una transacción se debe de tener un periodo vigente, por favor crear un nuevo periodo.
+            </div>
             {%endif%}
           </div>
           </form>
@@ -201,7 +205,11 @@ Modulo Financiero
               <tbody>
                 {%if transacciones%}
                 {%for t in transacciones%}
+                {%if forloop.first%}
+                <tr  bgcolor= "#E8F8F5" >
+                {%else%}
                 <tr>
+                {%endif%}
                   <td>{{forloop.counter}}</td>
                   <td>{{t.fecha_transaccion}}</td>
                   <td>{{t.concepto_transaccion}}</td>
@@ -209,6 +217,7 @@ Modulo Financiero
                   <td>{{t.monto_transaccion}}</td>
                   <td>{{t.saldo_transaccion}}</td>
                 </tr>
+
                 {%endfor%}
                 {%endif%}
               </tbody>
