@@ -31,7 +31,7 @@ class VentasForm(forms.ModelForm):
             'concepto_venta': forms.TextInput(attrs={'class': 'form-control'}),
             'cantidad': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese cantidad','value':'0', 'onchange':'monto()'}),
             'precio_venta_unitario': forms.TextInput(attrs={'class': 'form-control','value':'0', 'onchange':'monto()'}),
-            'monto_total': forms.TextInput(attrs={'class': 'form-control','disabled':'disabled','value':'0'}),
+            'monto_total': forms.TextInput(attrs={'class': 'form-control','readonly':'readonly','value':'0'}),
             'fecha_venta': forms.DateInput(attrs={'class': 'form-control', 'type':'date'}),
 
         }
