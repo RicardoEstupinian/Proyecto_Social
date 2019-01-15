@@ -237,8 +237,64 @@ def asignar_directiva(request):
 	return render(request, 'periodos/asignar_directiva.html',contexto)
 
 def periodo_seleccionado(request,id):
+	hermandad = list()
+	fondo_social = list()
+	primicias = list()
+	aux_e=0
+	aux_s =0
+
+	periodo_existe = Periodo.objects.filter(id=id).exists()
+	if periodo_existe:
+		periodo = Periodo.objects.get(id=id)
+		transacciones = Transaccion.objects.filter(periodo=periodo)
+		tesorerias = Tesoreria.objects.all()
+		for t in tesorerias:
+			if t.nombre_tesoreria == 'Hermandad':
+				hermandad.append(t.saldo_tesoreria) 
+				for transaccion in transacciones:
+					if transaccion.tipo == 'Ingreso'  and transaccion.tesoreria.nombre_tesoreria == 'Hermandad':
+						aux_e += transaccion.monto_transaccion   
+					elif transaccion.tipo == 'Egreso' and transaccion.tesoreria.nombre_tesoreria == 'Hermandad':
+						aux_s += transaccion.monto_transaccion
+				hermandad.append(aux_e)
+				hermandad.append(aux_s)
+				aux_e = 0
+				aux_s = 0
+				hermandad.append(hermandad[0] + hermandad[2] - hermandad[1])  
+			if t.nombre_tesoreria == 'Fondo Social':
+				fondo_social.append(t.saldo_tesoreria)  
+				for transaccion in transacciones:
+					if transaccion.tipo == 'Ingreso'  and transaccion.tesoreria.nombre_tesoreria == 'Fondo Social':
+						aux_e += transaccion.monto_transaccion 
+					elif transaccion.tipo == 'Egreso' and transaccion.tesoreria.nombre_tesoreria == 'Fondo Social':
+						aux_s += transaccion.monto_transaccion
+				fondo_social.append(aux_e)
+				fondo_social.append(aux_s)
+				aux_e = 0
+				aux_s = 0
+				fondo_social.append(fondo_social[0] + fondo_social[2] - fondo_social[1])  
+			if t.nombre_tesoreria == 'Primicia':
+				primicias.append(t.saldo_tesoreria)
+				for transaccion in transacciones:
+					if transaccion.tipo == 'Ingreso' and transaccion.tesoreria.nombre_tesoreria == 'Primicia':
+						aux_e += transaccion.monto_transaccion 
+					elif transaccion.tipo == 'Egreso' and transaccion.tesoreria.nombre_tesoreria == 'Primicia':
+						aux_s += transaccion.monto_transaccion
+				primicias.append(aux_e)
+				primicias.append(aux_s)
+				aux_e = 0
+				aux_s = 0 
+				primicias.append(primicias[0] + primicias[2]-primicias[1]) 
+	else:
+		periodo = ''
+		transacciones = ''
 	contexto ={
-	'prueba' : "hola",
+	'periodo' : periodo,
+	'transacciones': transacciones,
+	'fecha':datetime.now(),
+	'hermandad':hermandad,
+	'fondo_social':fondo_social,
+	'primicias':primicias
 	}
 	return render(request, 'periodos/periodo_seleccionado.html',contexto)
 
@@ -254,7 +310,7 @@ class periodo_pdf(View):
 class factura_pdf(View):
 	def get(self,request,*args,**kwargs):
 		tipo = self.kwargs['tipo_aux']
-		if tipo == 'true':
+		if tipo == 'True':
 			transaccion = Transaccion.objects.all().order_by('-id')[0]
 			fecha = transaccion.fecha_transaccion.strftime("%d/%m/%Y")
 			concepto = transaccion.concepto_transaccion

@@ -4,14 +4,273 @@
 Periodo seleccionado
 {% endblock %}
 {%block css%}
+	<link href="{% static 'vendor/datatables/dataTables.bootstrap4.css' %}" type="text/css" rel="stylesheet"> 
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sb-admin.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sb-admin.min.css' %}">
 {%endblock%}
 {% block content %}
 
+<div id="wrapper">
+  <div id="content-wrapper">
+    <div class="container-fluid">
+      <!-- Area Chart Example-->
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fas fa-chart-area"></i>
+        	Aspectos Generales
+          </div>
+        <div class="card-body">
+        	<div class="container">
+        	<div class="row">
+				<div class="col-md-12" align="center" style="background-color: #E3F1EC; padding: 10px;">
+					<strong>Información del Periodo</strong>
+				</div>
+			</div>
+			<br>
+            <div class="row">
+              <div class="col-md-6">
+                <strong> Inicio de Periodo: </strong> {{periodo.inicio_periodo}} 
+              </div>
+              <div class="col-md-6">
+                <strong> Final de Periodo: </strong>{{periodo.final_periodo}}
+              </div>
+            </div>
+            
+			<br>
+			<div class="row">
+				<div class="col-md-12" align="center" style="background-color: #E3F1EC; padding: 10px;">
+					<strong>Tesoreria de Hermandad</strong>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+              <div class="col-md-3">
+                <strong> Fondo Actual: </strong> $ {{hermandad.0}}0 
+              </div>
+              <div class="col-md-3">
+                <strong> Fondo inicial: </strong> $ {{hermandad.3}}0
+              </div>
+              <div class="col-md-3">
+                <strong> Ingresos del periodo: </strong> $ {{hermandad.1}}
+              </div>
+              <div class="col-md-3">
+                <strong> Egresos del Periodo: </strong> $ {{hermandad.2}}
+              </div>
+            </div>
+            <br>
+            <div class="row">
+          <div class="col-md-12">
+            <a href="{%url 'periodo_pdf' periodo.id %}" class="btn btn-primary">Generar Reporte PDF</a>
+          </div>
+          </div>
+          	</div>
+         </div>
+			<div class="card-footer small text-muted"></div>
+		 </div>
+      
+      <!-- DataTables Example -->
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fas fa-table"></i>
+          Libro Mayor | Tesorería de la Hermandad
+          
+      </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+ 
+                  <th>Fecha</th>
+                  <th>Concepto</th>
+                  <th>Tipo</th>
+                  <th>Monto</th>
+                  <th>Saldo</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+ 
+                  <th>Fecha</th>
+                  <th>Concepto</th>
+                  <th>Tipo</th>
+                  <th>Monto</th>
+                  <th>Saldo</th>
+                </tr>
+              </tfoot>
+              <tbody>
+                {%if transacciones%}
+                {%for t in transacciones%}
+                {%if t.tesoreria.nombre_tesoreria == 'Hermandad'%}
+                <tr>
+                  
+                  <td>{{t.fecha_transaccion}}</td>
+                  <td>{{t.concepto_transaccion}}</td>
+                  <td>{{t.tipo}}</td>
+                  <td>{{t.monto_transaccion}}</td>
+                  <td>{{t.saldo_transaccion}}</td>
+                </tr>
+                {%endif%}
+                {%endfor%}
+                {%endif%}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer small text-muted">Actualizado: {{fecha}}</div>
+      </div>
+
+	  <div class="card mb-3">
+        <div class="card-header">
+          <i class="fas fa-table"></i>
+          Libro Mayor | Tesorería de Primicias
+          <br><br>
+            <div class="row">
+              <div class="col-md-3">
+                <strong> Fondo Actual: </strong> $ {{primicias.0}}0 
+              </div>
+              <div class="col-md-3">
+                <strong> Fondo inicial: </strong> $ {{primicias.3}}0
+              </div>
+              <div class="col-md-3">
+                <strong> Ingresos del periodo: </strong> $ {{primicias.1}}
+              </div>
+              <div class="col-md-3">
+                <strong> Egresos del Periodo: </strong> $ {{primicias.2}}
+              </div>
+            </div>
+      </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Concepto</th>
+                  <th>Tipo</th>
+                  <th>Monto</th>
+                  <th>Saldo</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Concepto</th>
+                  <th>Tipo</th>
+                  <th>Monto</th>
+                  <th>Saldo</th>
+                </tr>
+              </tfoot>
+              <tbody>
+                {%if transacciones%}
+                {%for t in transacciones%}
+                {%if t.tesoreria.nombre_tesoreria == 'Primicia'%}
+                <tr>
+                
+                  <td>{{t.fecha_transaccion}}</td>
+                  <td>{{t.concepto_transaccion}}</td>
+                  <td>{{t.tipo}}</td>
+                  <td>{{t.monto_transaccion}}</td>
+                  <td>{{t.saldo_transaccion}}</td>
+                </tr>
+                {%endif%}
+                {%endfor%}
+                {%endif%}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer small text-muted">Actualizado: {{fecha}}</div>
+      </div>
+
+	  <div class="card mb-3">
+        <div class="card-header">
+          <i class="fas fa-table"></i>
+          Libro Mayor | Tesorería de Fondo Social
+          <br>
+          <br>  
+            <div class="row">
+              <div class="col-md-3">
+                <strong> Fondo Actual: </strong> $ {{fondo_social.0}}0 
+              </div>
+              <div class="col-md-3">
+                <strong> Fondo inicial: </strong> $ {{fondo_social.3}}0
+              </div>
+              <div class="col-md-3">
+                <strong> Ingresos del periodo: </strong> $ {{fondo_social.1}}
+              </div>
+              <div class="col-md-3">
+                <strong> Egresos del Periodo: </strong> $ {{fondo_social.2}}
+              </div>
+            </div>
+      </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Concepto</th>
+                  <th>Tipo</th>
+                  <th>Monto</th>
+                  <th>Saldo</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Concepto</th>
+                  <th>Tipo</th>
+                  <th>Monto</th>
+                  <th>Saldo</th>
+                </tr>
+              </tfoot>
+              <tbody>
+                {%if transacciones%}
+                {%for t in transacciones%}
+                {%if t.tesoreria.nombre_tesoreria == 'Fondo Social'%}
+                <tr>
+                  <td>{{t.fecha_transaccion}}</td>
+                  <td>{{t.concepto_transaccion}}</td>
+                  <td>{{t.tipo}}</td>
+                  <td>{{t.monto_transaccion}}</td>
+                  <td>{{t.saldo_transaccion}}</td>
+                </tr>
+                {%endif%}
+                {%endfor%}
+                {%endif%}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer small text-muted">Actualizado: {{fecha}}</div>
+      </div>
+
+    </div>
+    <!-- /.container-fluid -->
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+<!-- /#wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
+
 
 {%block js%}
 	<script type="text/javascript" src="{% static 'js/sb-admin.js'%}"></script>
 	<script type="text/javascript" src="{% static 'js/sb-admin.min.js'%}"></script>
+	 <!-- Bootstrap core JavaScript-->
+    <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script type="text/javascript" src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script type="text/javascript" src="{% static 'vendor/datatables/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/demo/datatables-demo.js' %}"></script>
 {%endblock%}
 {% endblock %}

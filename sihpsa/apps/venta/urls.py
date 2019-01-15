@@ -5,7 +5,6 @@ app_name = "venta"
 
 urlpatterns = [
     path('',views.buscar, name="listar"),
-    #path('editar/<articulo_id>',views.editar, name="editar"),
     path('editar/<pk>',views.ArticuloUpdate.as_view(), name="editar"),
     path('crear/',views.ArticuloCreate.as_view(), name="crear"),
 ]
