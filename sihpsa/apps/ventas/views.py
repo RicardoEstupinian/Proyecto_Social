@@ -30,5 +30,5 @@ def Cargar(request):
 				form.save()
 	else:
 		form=VentasForm()
-	return render(request,'venta/articulo_list.html',{'form': form , 'error':error,})
+	return render(request,'ventas/ventas.html',{'form': form , 'error':error,})
 

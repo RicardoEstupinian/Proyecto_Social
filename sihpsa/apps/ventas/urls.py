@@ -3,6 +3,8 @@ from apps.ventas import views
 from django.urls import path 
 from apps.ventas.views import Cargar
 
+app_name = "ventas"
+
 urlpatterns = [
-    path('venta/', views.Cargar),
+    path('', views.Cargar,name="venta"),
 ]
