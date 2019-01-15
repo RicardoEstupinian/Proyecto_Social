@@ -31,6 +31,6 @@ class Venta(models.Model):
     articulo = models.ForeignKey(Articulo, null=True, on_delete=models.PROTECT)
     concepto_venta = models.CharField(max_length=100)
     cantidad = models.IntegerField()
-    precio_venta_unitario = models.FloatField()
-    monto_total = models.FloatField()
+    precio_venta_unitario = models.IntegerField()
+    monto_total = models.IntegerField()
     fecha_venta = models.DateField()

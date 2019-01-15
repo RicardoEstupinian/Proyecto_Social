@@ -89,7 +89,13 @@
 									<li><a href="#">Ver miembros</a></li>
 								</ul>
 							</li>
-							<li><a href="#">Ventas</a></li>
+							<li class="menu-has-children"><a href="{%url 'venta_url:venta' %}">Ventas</a>
+								<ul>
+									<li><a href="{%url 'venta_url:venta' %}">Nueva venta</a></li>
+									<li><a href="#">Ver ventas</a></li>
+								</ul>
+
+							</li>
 							<li class="menu-has-children"><a href="{% url 'inventario_url:listar' %}">Inventarios</a>
 								<ul>
 									<li><a href="{% url 'inventario_url:crear' %}">Nuevo artículo</a></li>
