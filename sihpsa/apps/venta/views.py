@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView
+from django.views.generic import CreateView,UpdateView
 from django.urls import reverse_lazy
 from apps.venta.models import Articulo, Categoria
 from apps.venta.forms import ArticuloForm
@@ -41,22 +41,13 @@ def buscar(request):
         contexto = {'articulos_mostrar': articulos, 'categorias': categorias}
         return render(request, 'venta/articulo_list.html', contexto)
 
-
-def editar(request, articulo_id):
-    articulo = Articulo.objects.get(id=articulo_id)
-    if request.method == 'GET':
-        form=ArticuloForm(instance=articulo)
-    else:
-        form=ArticuloForm(request.POST, instance=articulo)
-        if form.is_valid():
-            form.save()
-            return redirect('inventario_url:listar')
-
-    contexto={'form':form}     
-    return render(request, 'venta/crearArticulo.html',contexto)
-
-
 class ArticuloCreate(CreateView):
+    model=Articulo
+    form_class=ArticuloForm
+    template_name='venta/crearArticulo.html'
+    success_url=reverse_lazy('inventario_url:listar')
+
+class ArticuloUpdate(UpdateView):
     model=Articulo
     form_class=ArticuloForm
     template_name='venta/crearArticulo.html'

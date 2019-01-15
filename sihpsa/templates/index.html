@@ -1,6 +1,7 @@
 {% load staticfiles %}
-	<!DOCTYPE html>
-	<html lang="zxx" class="no-js">
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
 	<head>
 		<!-- Mobile Specific Meta -->
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,97 +16,100 @@
 		<!-- meta character set -->
 		<meta charset="UTF-8">
 		<!-- Site Title -->
-		
+
 		<title>Home
 		</title>
-		
+
 		<link rel="shortcut icon" type="image/x-icon" href="{% static 'img/Church.ico' %}">
-		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
+		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
 		<link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-			<!--
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+		 crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/carusel.css' %}">
+		<!--
 			CSS
 			============================================= -->
-			<link rel="stylesheet" type="text/css" href="{% static 'base/css/linearicons.css' %}">
-			<link rel="stylesheet" type="text/css" href="{% static 'base/css/font-awesome.min.css' %}">
-			<link rel="stylesheet" type="text/css" href="{% static 'base/css/bootstrap.css' %}">
-			<link rel="stylesheet" type="text/css" href="{% static 'base/css/magnific-popup.css' %}">
-			<link rel="stylesheet" type="text/css" href="{% static 'base/css/jquery-ui.css' %}">
-			<link rel="stylesheet" type="text/css" href="{% static 'base/css/nice-select.css' %}">
-			<link rel="stylesheet" type="text/css" href="{% static 'base/css/animate.min.css' %}">		
-			<link rel="stylesheet" type="text/css" href="{% static 'base/css/owl.carousel.css' %}">
-			<link rel="stylesheet" type="text/css" href="{% static 'base/css/main.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'base/css/linearicons.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'base/css/font-awesome.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'base/css/bootstrap.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'base/css/magnific-popup.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'base/css/jquery-ui.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'base/css/nice-select.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'base/css/animate.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'base/css/owl.carousel.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'base/css/main.css' %}">
 	</head>
-		<body>	
-			</img>
-			<header id="header" >
-				<div class="header-top">
-					<div class="container">
-			  		<div class="row align-items-center">
-			  			<div class="col-lg-6 col-sm-6 col-6 header-top-left">
-			  				<ul>
-			  					<li><a href="#">Telefono</a></li>
-			  					<li><a href="#">email</a></li>
-			  				</ul>			
-			  			</div>
-			  			<div class="col-lg-6 col-sm-6 col-6 header-top-right">
+
+	<body class="bg-dark">
+		</img>
+		<header id="header">
+			<div class="header-top">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-lg-6 col-sm-6 col-6 header-top-left">
+							<ul>
+								<li><a href="#">Telefono</a></li>
+								<li><a href="#">email</a></li>
+							</ul>
+						</div>
+						<div class="col-lg-6 col-sm-6 col-6 header-top-right">
 							<div class="header-social">
 								<a href="#"><i class="fa fa-facebook"></i></a>
 								<a href="#"><i class="fa fa-twitter"></i></a>
 								<a href="#"><i class="fa fa-whatsapp"></i></a>
 								<a href="#"><i class="fa fa-instagram"></i></a>
 							</div>
-			  			</div>
-			  		</div>			  					
+						</div>
 					</div>
 				</div>
-				<div class="container main-menu">
-					<div class="row align-items-center justify-content-between d-flex">
-				      <div id="logo">
-				        <!--<a href="index.html"><img src="../../static/base/img/logo.png" alt="" title="" height="60px" /></a>-->
-				      </div>
-				      <nav id="nav-menu-container">
-				      	{% if request.user.is_authenticated %}
-				      	<ul class="nav-menu">
-				          <li><a href="{% url 'base'%}">Home</a></li>
-				          <li><a href="{%url 'periodo_directivo'%}">Periodos Directivos</a></li>
-				          <li class="menu-has-children"><a href="{% url 'transaccion'%}">Modulo Financiero</a>
-				            <ul>
-				            	  <li><a href="{% url 'transaccion'%}">Registrar Transacción</a></li>
-						          <li class="menu-has-children"><a href="#">Cuentas por Cobrar</a>
-						            <ul>
-						              <li><a href="#">Registrar cuenta por cobrar</a></li>
-						              <li><a href="#">Saldar Cuenta</a></li>
-						            </ul>
-						          </li>
-				            </ul>
-				            <li class="menu-has-children"><a href="#">Modulo de Afiliación</a>
-				            <ul>
-				            	  <li><a href="#">Nuevo miembro</a></li>
-						          <li><a href="#">Ver miembros</a></li>
-				            </ul>
-				          </li>
-				     	  <li><a href="#">Ventas</a></li>					               
-				          <li class="menu-has-children"><a href="{% url 'inventario_url:listar' %}">Inventarios</a>
-				            <ul>
-				            	  <li><a href="{% url 'inventario_url:crear' %}">Nuevo artículo</a></li>
-						          <li><a href="{% url 'inventario_url:listar' %}">Ver artículos</a></li>
-				            </ul>
-				          </li>
+			</div>
+			<div class="container main-menu">
+				<div class="row align-items-center justify-content-between d-flex">
+					<div id="logo">
+						<!--<a href="index.html"><img src="../../static/base/img/logo.png" alt="" title="" height="60px" /></a>-->
+					</div>
+					<nav id="nav-menu-container">
+						{% if request.user.is_authenticated %}
+						<ul class="nav-menu">
+							<li><a href="{% url 'base'%}">Home</a></li>
+							<li><a href="{%url 'periodo_directivo'%}">Periodos Directivos</a></li>
+							<li class="menu-has-children"><a href="{% url 'transaccion'%}">Modulo Financiero</a>
+								<ul>
+									<li><a href="{% url 'transaccion'%}">Registrar Transacción</a></li>
+									<li class="menu-has-children"><a href="#">Cuentas por Cobrar</a>
+										<ul>
+											<li><a href="#">Registrar cuenta por cobrar</a></li>
+											<li><a href="#">Saldar Cuenta</a></li>
+										</ul>
+									</li>
+								</ul>
+							<li class="menu-has-children"><a href="#">Modulo de Afiliación</a>
+								<ul>
+									<li><a href="#">Nuevo miembro</a></li>
+									<li><a href="#">Ver miembros</a></li>
+								</ul>
+							</li>
+							<li><a href="#">Ventas</a></li>
+							<li class="menu-has-children"><a href="{% url 'inventario_url:listar' %}">Inventarios</a>
+								<ul>
+									<li><a href="{% url 'inventario_url:crear' %}">Nuevo artículo</a></li>
+									<li><a href="{% url 'inventario_url:listar' %}">Ver artículos</a></li>
+								</ul>
+							</li>
 
 
-				          {% if request.user.is_authenticated %}
+							{% if request.user.is_authenticated %}
 							<li><a href="#">Bienvenido: {{user.username}}</a></li>
 							<li><a href="{% url 'logout' %}">Logout </a></li>
-				          {% else %}
+							{% else %}
 							<li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
-				          {% endif %}
-				        </ul>
+							{% endif %}
+						</ul>
 
 						{%else%}
-				        <ul class="nav-menu">
-				          <li><a href="index.html">Home</a></li>
-				          <!--<li><a href="#">Penstaña 1</a></li>
+						<ul class="nav-menu">
+							<li><a href="index.html">Home</a></li>
+							<!--<li><a href="#">Penstaña 1</a></li>
 				          <li><a href="#">Penstaña 2</a></li>
 				          <li><a href="#">Penstaña n</a></li>
 				          
@@ -125,54 +129,130 @@
 						            </ul>
 						          </li>					                		
 				            </ul>
-				          </li>-->					          					          		    
-				          <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
-				        </ul>
-				        {%endif%}
-				      </nav><!-- #nav-menu-container -->					      		  
+				          </li>-->
+							<li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+						</ul>
+						{%endif%}
+					</nav><!-- #nav-menu-container -->
+				</div>
+			</div>
+		</header><!-- #header -->
+		
+			<div class="carousel slide" data-ride="carousel" id="carusel">
+				<ol class="carousel-indicators">
+					<li class="active" data-slide-to="0" data-target="#carusel">
+					</li>
+					<li data-slide-to="1" data-target="#carusel">
+					</li>
+					<li data-slide-to="2" data-target="#carusel">
+					</li>
+				</ol>
+				<div class="carousel-inner" role="listbox">
+					<div class="carousel-item active" style="height: 100vh">
+						<img alt="First Slide" class="d-block h-100 w-100" src="{% static 'anuncios/anuncio1.png' %}">
+
+						<div class="carousel-caption d-none d-md-block">
+
+							<h1 class="text-white h2">Bienvenidos</h1>
+							<h2 class="text-white">Parroquia Santa Alicia</h2>
+							<br>
+							<a href="{% url 'login' %}" class="primary-btn text-uppercase">Iniciar sesion</a>
+
+						</div>
+					</div>
+					<div class="carousel-item" style="height: 100vh">
+						<img alt="Second slide" class="d-block h-100 w-100" src="{% static 'anuncios/anuncio2.jpg' %}">
+						<div class="carousel-caption d-none d-md-block">
+							
+								<h1 class="text-white ">Via Crucis</h1>
+									<h2 class="text-white">Este 06 de abril. Acompañanos</h2>
+									
+						</div>
+					</div>
+					<div class="carousel-item " style="height:100vh">
+						<img alt="Third slide" class="d-block h-100 w-100" id="tercero" src="{% static 'anuncios/anuncio3.jpg' %}">
+						<div class="carousel-caption d-none d-md-block">
+							
+								<h1 class="text-white h2">Vigilia.</h1>
+								<h2 class="text-white">Este 20 de enero.</h2>
+									
+						</div>
 					</div>
 				</div>
-			</header><!-- #header -->
-		
+				<a class="carousel-control-prev" data-slide="prev" href="#carusel" role="button">
+					<span aria-hidden="true" class="carousel-control-prev-icon">
+					</span>
+					<span class="sr-only">
+						Anterior
+					</span>
+				</a>
+				<a class="carousel-control-next" data-slide="next" href="#carusel" role="button">
+					<span aria-hidden="true" class="carousel-control-next-icon">
+					</span>
+					<span class="sr-only">
+						Siguiente
+					</span>
+				</a>
+			</div>
 			<!-- start banner Area -->
-			<section class="banner-area relative">
-				<div class="overlay overlay-bg"></div>				
-				<div class="container">
-					<div class="row fullscreen align-items-center justify-content-between">
-						<div class="content">	
-
-						<div class="col-lg-6 col-md-6 banner-left">
-							<h6 class="text-white">Bienvenidos a</h6>
-							<h1 class="text-white">La iglesia de chepe</h1>
-							<a href="{% url 'login' %}" class="primary-btn text-uppercase">Iniciar sesion</a>
-						</div>
-
-						</div>	
-					</div>
-				</div>					
-			</section>
 		
-			<!-- start footer Area -->		
-			<footer class="footer-area">
-				<div class="row footer-bottom d-flex justify-content-between align-items-center" >
-					<div style="padding-left: 10%; padding-bottom: 2%;" ">
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Parroquia santa Alicia <i class="fa fa-home" aria-hidden="true"></i>
-					</div>
+		<br>
+		<br>
+		<div class="row p-3">
+                <div class="card bg-light mb-3 ml-4" style="max-width: 25rem;">
+						<div class="card-header"><strong>Aviso URGENTE</strong></div>
+						<div class="card-body">
+						  <h4 class="card-title">JOSE FLORES</h4>
+						  <p class="card-text">Se le solicita que deje la peda y trabaje en el proyecto.</p>
+						</div>
+					  </div>
 
-			</footer>
-			<!-- End footer Area -->	
-			<script type="text/javascript" src="{% static 'base/js/vendor/jquery-2.2.4.min.js'%}"></script>
-			<script type="text/javascript" src="{% static 'base/js/popper.min.js'%}"></script>
-			<script type="text/javascript" src="{% static 'base/js/vendor/bootstrap.min.js'%}"></script>
- 			<script type="text/javascript" src="{% static 'base/js/jquery-ui.js'%}"></script>
-  			<script type="text/javascript" src="{% static 'base/js/easing.min.js'%}"></script>
-			<script type="text/javascript" src="{% static 'base/js/hoverIntent.js'%}"></script>
-			<script type="text/javascript" src="{% static 'base/js/superfish.min.js'%}"></script>
-			<script type="text/javascript" src="{% static 'base/js/jquery.ajaxchimp.min.js'%}"></script>
-			<script type="text/javascript" src="{% static 'base/js/jquery.magnific-popup.min.js'%}"></script>
-			<script type="text/javascript" src="{% static 'base/js/jquery.nice-select.min.js'%}"></script>
-			<script type="text/javascript" src="{% static 'base/js/owl.carousel.min.js'%}"></script>
-			<script type="text/javascript" src="{% static 'base/js/mail-script.js'%}"></script>
-			<script type="text/javascript" src="{% static 'base/js/main.js'%}"></script>
-		</body>
-	</html>
+
+					  <div class="card bg-light mb-3 ml-4" style="max-width: 25rem;">
+							<div class="card-header">Header</div>
+							<div class="card-body">
+							  <h4 class="card-title">Light card title</h4>
+							  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							</div>
+						  </div>
+					
+						  <div class="card bg-light mb-3 ml-4" style="max-width: 25rem;">
+								<div class="card-header">Header</div>
+								<div class="card-body">
+								  <h4 class="card-title">Light card title</h4>
+								  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+								</div>
+							  </div>
+
+            </div>
+            </div>
+		</div>
+
+
+		<!-- start footer Area -->
+		<footer class="footer">
+			<div class="row footer-bottom d-flex justify-content-between align-items-center">
+				<div style="padding-left: 10%; padding-bottom: 2%;"
+				 ">
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Parroquia santa Alicia <i class="
+				 fa fa-home" aria-hidden="true"></i>
+				</div>
+
+		</footer>
+		<!-- End footer Area -->
+		<script type="text/javascript" src="{% static 'base/js/vendor/jquery-2.2.4.min.js'%}"></script>
+		<script type="text/javascript" src="{% static 'base/js/popper.min.js'%}"></script>
+		<script type="text/javascript" src="{% static 'base/js/vendor/bootstrap.min.js'%}"></script>
+		<script type="text/javascript" src="{% static 'base/js/jquery-ui.js'%}"></script>
+		<script type="text/javascript" src="{% static 'base/js/easing.min.js'%}"></script>
+		<script type="text/javascript" src="{% static 'base/js/hoverIntent.js'%}"></script>
+		<script type="text/javascript" src="{% static 'base/js/superfish.min.js'%}"></script>
+		<script type="text/javascript" src="{% static 'base/js/jquery.ajaxchimp.min.js'%}"></script>
+		<script type="text/javascript" src="{% static 'base/js/jquery.magnific-popup.min.js'%}"></script>
+		<script type="text/javascript" src="{% static 'base/js/jquery.nice-select.min.js'%}"></script>
+		<script type="text/javascript" src="{% static 'base/js/owl.carousel.min.js'%}"></script>
+		<script type="text/javascript" src="{% static 'base/js/mail-script.js'%}"></script>
+		<script type="text/javascript" src="{% static 'base/js/main.js'%}"></script>
+	</body>
+
+</html>

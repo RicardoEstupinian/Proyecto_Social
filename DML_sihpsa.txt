@@ -59,3 +59,8 @@ INSERT INTO public.transaccion_tesoreria(
 INSERT INTO public.transaccion_tesoreria(
 	id, nombre_tesoreria, saldo_tesoreria)
 	VALUES (4, 'Todas', 0.00);
+
+INSERT INTO public.venta_categoria(id, nombre_categoria) VALUES (1, 'Muebles');
+INSERT INTO public.venta_categoria(id, nombre_categoria) VALUES (2, 'Camisas');
+INSERT INTO public.venta_categoria(id, nombre_categoria) VALUES (3, 'Figuras');
+INSERT INTO public.venta_categoria(id, nombre_categoria) VALUES (4, 'Carros');

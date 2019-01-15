@@ -14,7 +14,7 @@ Miembro-Administración
                         <input type="search" placeholder="Buscar por nombre" id="Buscador" name="q"/>
                     </div>
                     <div class="col-md-6 categorias">
-                        <input class="btn btn-secondary" type="submit" name="Buscar" value="Buscar/Ver todos">
+                        <input class="btn btn-secondary" type="submit" name="Buscar" value="Buscar" id="btnBuscar">
                     </div>
                 </div>
             </div>
@@ -51,9 +51,9 @@ Miembro-Administración
         {% if miembros %}
             <h2 class="bg-warning text-secondary mt-3 text-center p-2" style="border-radius: 15px;">Resultados: {{miembros|length}} miembro{{miembros|pluralize}} con el nombre "{{ query }}"</h2>
         {% else %}
-            <h2 class="bg-warning text-secondary mt-3 text-center p-2" style="border-radius: 15px;" >No se encontro ningun miembro con el nombre "{{query}}"</h2>
+            <h2 class="bg-warning text-secondary mt-3 text-center p-2" style="border-radius: 15px;" >No se encontró ningún miembro con el nombre "{{query}}"</h2>
         {% endif %}    
-    {% elif cargo %}
+    {% elif cargo and cargo != 'Todos' %}
         {% if miembros %}
             <h2 class="bg-warning text-secondary mt-3 text-center p-2" style="border-radius: 15px;">Cargo: {{ cargo }}</h2>
         {% else %}
@@ -65,22 +65,68 @@ Miembro-Administración
     <div class="row publicacion my-3 mx-0">
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-3"><p id="prueba">Foto:</p><img src="{{ miembro.foto_m.url }}" width="100" id="id_perfil" style="padding-bottom: 2%;"></div>    
-                <div class="col-md-2"><p id="prueba">Nombres:</p><p>{{ miembro.nombre_m }}</p></div>
-                <div class="col-md-2"><p id="prueba">Apellidos:</p><p>{{ miembro.apellido_m }}</p></div>
-                <div class="col-md-5" style="padding-top: 2%;">
+                <div class="col-md-2"><p id="prueba"></p><img src="{{ miembro.foto_m.url }}" width="100" id="id_perfil" style="padding-bottom: 5%;"></div>
+                <div class="col-md-2"><p id="prueba">CARNET</p><p>{{ miembro.carnet }}</p></div>
+                <div class="col-md-2"><p id="prueba">APELLIDOS</p><p>{{ miembro.apellido_m }}</p></div>
+                <div class="col-md-2"><p id="prueba">NOMRBES</p><p>{{ miembro.nombre_m }}</p></div>
+                <div class="col-md-4" style="padding-top: 2%;">
                     <div class="row">
-                        <div class="col-md-4">
-                            <a href="{% url 'miembro:listar' miembro.id %}" title="" class="btn btn-block btn-primary font-weight-bold">Ver</a>
+                        <div class="col-md-3">
+                            <a href="{% url 'miembro:ver' miembro.id %} " title="" class="btn btn-block btn-primary font-weight-bold">Ver</a>
                         </div>  
                         <div class="col-md-4">
-                            <a href="{% url 'miembro:editar' miembro.id %}" title="" class="btn btn-block btn-success font-weight-bold">Editar</a>
+                            <a href="{% url 'miembro:editar' miembro.id %} " title="" class="btn btn-block btn-success font-weight-bold">Editar</a>
                         </div>
-                        <div class="col-md-4">
-                            <a href="#" title="" class="btn btn-block btn-danger font-weight-bold">Bloquear</a>
+                        <div class="col-md-5">
+                            {% if miembro.cuenta.is_active %}
+                            <a class="btn btn-block btn-danger font-weight-bold" data-toggle = "modal"  href="#{{forloop.counter}}" >Bloquear</a>
+                            {% else %}
+                            <a class="btn btn-block btn-info font-weight-bold" data-toggle = "modal"  href="#{{forloop.counter}}" >Desbloquear</a>
+                            {% endif %}
+
+                            <!-- Ventana Emergente para editar formulario-->
+                            <div class="modal fade" id="{{forloop.counter}}">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <!-- Header de ventana-->
+                                        <div class="modal-header">
+                                            {% if miembro.cuenta.is_active %}
+                                                <h2 class="modal-title">Bloquear miembro</h2>
+                                            {% else %}
+                                                <h2 class="modal-title">Desbloquear miembro</h2>
+                                            {% endif %}
+                                            <button tyle="button" class="close" data-dismiss="modal" aria-hidden = "true">&times;</button>
+                                        </div>
+
+                                        <!-- Contenido de la ventana -->
+                                        <div class="modal-body">
+                                            {% if miembro.cuenta.is_active %}
+                                                <h3 class="text-center">¿ Desea bloquear a {{miembro.nombre_m}} {{miembro.apellido_m}} ?</h3>
+                                            {% else %}
+                                                <h3 class="text-center">¿ Desea desbloquear a {{miembro.nombre_m}} {{miembro.apellido_m}} ?</h3>
+                                            {% endif %}
+                                        </div>
+
+                                        <!-- Footer-->
+                                        <div class="modal-footer">
+                                            <form method="post">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="idBloquear" value= "{{miembro.cuenta.id}}">
+                                                {% if miembro.cuenta.is_active %}
+                                                    <button type="submit" class="btn btn-danger" name="btnBloquear">Bloquear</button>
+                                                {% else %}
+                                                    <button type="submit" class="btn btn-info" name="btnBloquear">Desbloquear</button>
+                                                {% endif %}
+                                                
+                                                <button type="button" class="btn btn-secondary" data-dismiss= "modal">Cancelar</button>
+                                            </form> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -88,5 +134,4 @@ Miembro-Administración
     {% endfor %}
     </div>
 <br>
-
 {% endblock %}

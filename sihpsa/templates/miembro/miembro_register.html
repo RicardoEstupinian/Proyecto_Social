@@ -50,11 +50,11 @@ Miembro-Registrar
     			<div class="row">
       				<div class="col-md-6">
         				<label >Contraseña</label>
-				<input class="form-control" type="password" name="password1" required>
+				<input class="form-control" type="password" name="password1" id="pass1" required>
       				</div>
       				<div class="col-md-6">
         				<label >Confirmar contraseña</label>
-				<input class="form-control" type="password" name="password2" required>
+				<input class="form-control" type="password" name="password2" id="pass2" required>
       				</div>
     			</div>
   			</div>
@@ -222,6 +222,22 @@ Miembro-Registrar
 			var $formData = $myForm.serialize();
 			var $thisURL = $myForm.attr('data-url') || window.loaction.href;
 
+			var apellidos = $('#id_cuenta_apellido').val();
+			var pass1 = $('#pass1').val();
+			var pass2 = $('#pass2').val();
+			var color = $('#id_cuenta_nombre').css('border-color');
+			var apellidos_b = false;
+			var pass_b = false;
+
+			apellidos = apellidos.split(" ");
+
+			if(apellidos.length==2)
+				apellidos_b=true;
+
+			if(pass1==pass2)
+				pass_b=true;
+			
+			if(apellidos_b && pass_b){
 			$.ajax({
 				method:'POST',
 				url: $thisURL,
@@ -233,6 +249,9 @@ Miembro-Registrar
 				alert('Cuenta registrada con éxito, favor completar los campos restantes');
 				$("#id_miembro_nombre").val($("#id_cuenta_nombre").val());
 				$("#id_miembro_apellido").val($("#id_cuenta_apellido").val());
+				$('#pass1').css('border-color', color);
+				$('#pass2').css('border-color', color);
+				$('#id_cuenta_apellido').css('border-color', color);
 				$("#id_miembro_carnet").val(data.carnet);
 				$myForm[0].reset();
 				$('#id_cuenta_guardar').attr("disabled", true);
@@ -245,6 +264,28 @@ Miembro-Registrar
 			function handleError(ThrowError){
 				console.log(ThrowError);
 			}
+		}else{
+			if(!apellidos_b && !pass_b){
+				$('#id_cuenta_apellido').css('border-color', 'red');
+				$('#pass1').css('border-color', 'red');
+				$('#pass2').css('border-color', 'red');
+				alert('Favor revisar los siguientes datos');
+			}
+			else{
+				if(!apellidos_b){
+					alert('Por favor ingrese sus dos apellidos');
+					$('#id_cuenta_apellido').css('border-color', 'red');
+					$('#pass1').css('border-color', color);
+					$('#pass2').css('border-color', color);
+				}
+				else{
+					alert('Las contraseñas no coinciden');
+					$('#pass1').css('border-color', 'red');
+					$('#pass2').css('border-color', 'red');
+					$('#id_cuenta_apellido').css('border-color', color);
+				}
+			}
+		}
 		});
 	});
 </script>

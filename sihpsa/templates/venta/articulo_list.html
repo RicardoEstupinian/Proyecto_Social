@@ -21,7 +21,7 @@
 
 
 </form>
-<form action="" method="GET" class="form-inline mb-4 mt-4 justify-content-center">
+<form action="" method="GET" class="form-inline mb-4 mt-4 justify-content-center" >
     <div align="center" class="container" aling="center">
         <div class="btn-group mt-3 mb-3" role="group" aria-label="Basic example">
             {%for cat in categorias%}
@@ -48,7 +48,7 @@
                     <th scope="col">Accion</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody >
                 
                     {% for articulo in articulos_mostrar%}
                     <tr>
@@ -58,10 +58,11 @@
                         <td>{{articulo.precio}}</td>
                         <td>{{articulo.estado}}</td>
                         <td>{{articulo.existencia}}</td>
-                        <td>{{articulo.imagen_articulo}}</td>
+                        <td><img src="/{{articulo.imagen_articulo}}" alt="No hay Imagen" heigth="102" width="105"/></td>
 
                         <!--Envio el id del articulo a modificar-->
-                        <td><a href="{%url 'inventario_url:editar' articulo_id=articulo.id %}"><button type="button" class="btn btn-info">Editar</button></a></td>
+                        <td><a href="{%url 'inventario_url:editar' articulo.id %}"><button type="button" class="btn btn-info">Editar</button></a>
+                        </td>
                     </tr>
                     {% empty %}
                     <h2 align="center" class="mb-4">No hay Articulos</h2>

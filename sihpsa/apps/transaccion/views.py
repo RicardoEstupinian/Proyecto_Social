@@ -1,10 +1,14 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
+from django.views.generic import View
 from apps.transaccion.models import *
 from apps.transaccion.forms import *
 from apps.miembro.models import *
 from datetime import datetime, date, time, timedelta
 import calendar
+
+from sihpsa.utileria import render_pdf
+
 # Create your views here.
 def periodoDirectivo(request):
 	cant = 0
@@ -142,6 +146,7 @@ def transaccion(request):
 			concepto = request.POST.get('concepto_transaccion')
 			tipo = request.POST.get('tipo')
 			monto = float(request.POST.get('monto_transaccion'))
+			tipo_aux = True
 			if tesoreria.nombre_tesoreria == 'Todas':
 				monto_primicia = round(monto *0.25,2)
 				monto_social = round(monto*0.25,2)
@@ -149,13 +154,15 @@ def transaccion(request):
 				create_transaccion(periodo,Tesoreria.objects.get(nombre_tesoreria='Primicia'),fecha,concepto,tipo,monto_primicia)
 				create_transaccion(periodo,Tesoreria.objects.get(nombre_tesoreria='Fondo Social'),fecha,concepto,tipo,monto_social)
 				create_transaccion(periodo,Tesoreria.objects.get(nombre_tesoreria='Hermandad'),fecha,concepto,tipo,monto_hermandad)
+				tipo_aux = False
 			elif tesoreria.nombre_tesoreria == 'Primicia':
 				create_transaccion(periodo,tesoreria,fecha,concepto,tipo,monto)
 			elif tesoreria.nombre_tesoreria == 'Fondo Social':
 				create_transaccion(periodo,tesoreria,fecha,concepto,tipo,monto)
 			elif tesoreria.nombre_tesoreria == 'Hermandad':
 				create_transaccion(periodo,tesoreria,fecha,concepto,tipo,monto)
-			return redirect('transaccion')
+			return redirect('factura_pdf', tipo_aux= tipo_aux)
+
 	contexto ={
 	'periodo_actual' : periodo_actual,
 	'periodo_anual':periodo_anual,
@@ -235,6 +242,46 @@ def periodo_seleccionado(request,id):
 	}
 	return render(request, 'periodos/periodo_seleccionado.html',contexto)
 
+class periodo_pdf(View):
+	def get(self,request,*args,**kwargs):
+		id = self.kwargs['id']
+		contexto = {
+		"fecha_sistema": datetime.now()
+		}
+		pdf = render_pdf("periodos/periodo.html", contexto)
+		return HttpResponse(pdf,content_type="application/pdf")
+
+class factura_pdf(View):
+	def get(self,request,*args,**kwargs):
+		tipo = self.kwargs['tipo_aux']
+		if tipo == 'true':
+			transaccion = Transaccion.objects.all().order_by('-id')[0]
+			fecha = transaccion.fecha_transaccion.strftime("%d/%m/%Y")
+			concepto = transaccion.concepto_transaccion
+			monto = transaccion.monto_transaccion
+		elif tipo == 'False':
+			transacciones = Transaccion.objects.all().order_by('-id')[:3]
+			monto = 0
+			for t in transacciones:
+				monto += t.monto_transaccion
+			transaccion = transacciones[0]
+			fecha = transaccion.fecha_transaccion.strftime("%d/%m/%Y")
+			concepto = transaccion.concepto_transaccion
+		else:
+			monto = 0
+			fecha = ''
+			concepto = ''
+			
+		contexto = {
+		"tipo":tipo,
+		"fecha": fecha,
+		"concepto":concepto,
+		"monto":monto,
+		"fecha_sistema": datetime.now()
+		}
+		pdf = render_pdf("transaccion/factura.html", contexto)
+		return HttpResponse(pdf,content_type="application/pdf")
+
 def create_transaccion(periodo,tesoreria,fecha,concepto,tipo,monto):
 	if tipo == 'Ingreso':
 		saldo = tesoreria.saldo_tesoreria + monto
@@ -254,7 +301,7 @@ def create_transaccion(periodo,tesoreria,fecha,concepto,tipo,monto):
 		saldo_transaccion= saldo
 		)
 	transaccion_nueva.save()
-	return
+	return 
 
 
 

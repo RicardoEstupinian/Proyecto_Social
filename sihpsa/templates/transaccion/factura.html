@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Factura</title>
+        <style type="text/css">
+            body {
+                font-weight: 200;
+                font-size: 14px;
+            }
+            .header {
+                font-size: 20px;
+                font-weight: 100;
+                text-align: center;
+                color: #007cae;
+            }
+            .title {
+                font-size: 22px;
+                font-weight: 100;
+               /* text-align: right;*/
+               padding: 10px 20px 0px 20px;  
+            }
+            .title span {
+                color: #007cae;
+            }
+            .details {
+                padding: 10px 20px 0px 20px;
+                text-align: left !important;
+                /*margin-left: 40%;*/
+            }
+            .hrItem {
+                border: none;
+                height: 1px;
+                /* Set the hr color */
+                color: #333; /* old IE */
+                background-color: #fff; /* Modern Browsers */
+            }
+            table {
+   			width: 100%;
+   			border: 0.1px ;
+			}
+			th, td {
+			   width: 25%;
+			   text-align: left;
+			   vertical-align: top;
+			   border: 1px ;
+			   border-spacing: 0;
+			}
+        </style>
+    </head>
+    <body>
+        <div class='wrapper'>
+            <div class='header'>
+                <p class='title'> </p>
+            </div>
+        </div>
+        <div class='details'>
+            <p class='title'> FACTURA <br>Hermandades Parroquia Santa Alicia</p>
+            
+            <hr class='hrItem'/>
+            <p>Detalle de Factura</p>
+            <hr class='hrItem'/>
+        </div>
+        <br>
+        <table>
+        	<thead>
+		   		<tr>
+        			<th>Fecha:</th>
+        			<th colspan="2">Concepto:</th>
+        			<th>Monto</th>
+        		</tr>        		
+        	</thead>
+        	
+        	<tbody>
+        		<tr>
+        			<td>{{fecha}}</td>
+        			<td colspan="2">{{concepto}}</td>
+        			<td>${{monto}}0</td>
+        		</tr>
+        		
+        	</tbody>
+        </table>
+        <br>
+        <hr class='hrItem'/>
+        <p>Factura generada: {{fecha_sistema}}</p>
+    </body>
+</html>
