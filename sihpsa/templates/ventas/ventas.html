@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block title %}SIHPSA | Inventario{% endblock %}
+
+{% block content %}
+{%if error%}
+<div class="alert alert-danger text-center" role="alert">
+    Ingrese correctamente los campos de a venta
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{%endif%}
+<form method ='post'>
+  {% csrf_token %}
+  <div class="form-group">
+  	<label>Articulos</label>
+  {{form.articulo}}
+  </div>
+  <div class ="form-group">
+  <label>concepto de venta</label>
+  {{form.concepto_venta}}
+</div>
+<div class="form-group">
+ <label>cantidad</label>
+ {{form.cantidad}}
+</div>
+<div class="form-group">
+<label>Precio de venta</label>	
+  {{form.precio_venta_unitario}}
+</div>
+<div class="form-group">
+<label>monto total</label>
+  {{form.monto_total}}
+</div>
+<div class="form-group">
+<label>fecha de venta</label>
+  {{form.fecha_venta}}
+</div>
+  <button type="submit">Guardar</button>
+ </form>
+{%endblock%}
