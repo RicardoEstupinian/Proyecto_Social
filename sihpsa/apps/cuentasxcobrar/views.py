@@ -27,8 +27,6 @@ def cargarDeuda(request):
             form_cargardeuda.save()
             
             return redirect ('/' )
-
-		
     else:
      form_cargardeuda = cargarDeudaForm()
 

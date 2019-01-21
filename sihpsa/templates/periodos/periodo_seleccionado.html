@@ -58,11 +58,7 @@ Periodo seleccionado
               </div>
             </div>
             <br>
-            <div class="row">
-          <div class="col-md-12">
-            <a href="{%url 'periodo_pdf' periodo.id %}" class="btn btn-primary">Generar Reporte PDF</a>
-          </div>
-          </div>
+            
           	</div>
          </div>
 			<div class="card-footer small text-muted"></div>
@@ -117,7 +113,16 @@ Periodo seleccionado
             </table>
           </div>
         </div>
-        <div class="card-footer small text-muted">Actualizado: {{fecha}}</div>
+        <div class="card-footer small text-muted">
+          <div class="row">
+          <div class="col-md-8">
+            Actualizado: {{fecha}}
+          </div>
+          <div class="col-md-4">
+            <a href="{%url 'periodo_pdf' periodo.id  1 %}" class="btn btn-primary">Generar Reporte PDF</a>
+          </div>
+          </div>
+        </div>
       </div>
 
 	  <div class="card mb-3">
@@ -180,7 +185,16 @@ Periodo seleccionado
             </table>
           </div>
         </div>
-        <div class="card-footer small text-muted">Actualizado: {{fecha}}</div>
+        <div class="card-footer small text-muted">
+          <div class="row">
+          <div class="col-md-8">
+            Actualizado: {{fecha}}
+          </div>
+          <div class="col-md-4">
+            <a href="{%url 'periodo_pdf' periodo.id  2 %}" class="btn btn-primary">Generar Reporte PDF</a>
+          </div>
+          </div>
+        </div>
       </div>
 
 	  <div class="card mb-3">
@@ -243,7 +257,16 @@ Periodo seleccionado
             </table>
           </div>
         </div>
-        <div class="card-footer small text-muted">Actualizado: {{fecha}}</div>
+        <div class="card-footer small text-muted">
+          <div class="row">
+          <div class="col-md-8">
+            Actualizado: {{fecha}}
+          </div>
+          <div class="col-md-4">
+            <a href="{%url 'periodo_pdf' periodo.id  3 %}" class="btn btn-primary">Generar Reporte PDF</a>
+          </div>
+          </div>
+        </div>
       </div>
 
     </div>

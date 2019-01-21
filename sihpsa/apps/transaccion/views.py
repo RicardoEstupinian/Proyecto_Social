@@ -182,7 +182,7 @@ def asignar_directiva(request):
 	existe_directivo= Directivo.objects.filter(estado=False).exists()
 
 	if existe_directivo:
-		directivos = Directivo.objects.filter(estado=False).order_by('-id')
+		directivos = Directivo.objects.filter(estado=False).order_by('-id') #se consultan los directivos actuales
 		if len(directivos) == 8:
 			directiva_completa = True
 
@@ -301,8 +301,81 @@ def periodo_seleccionado(request,id):
 class periodo_pdf(View):
 	def get(self,request,*args,**kwargs):
 		id = self.kwargs['id']
-		contexto = {
-		"fecha_sistema": datetime.now()
+		tipo = self.kwargs['tipo'] #tipo indica de que tesoreria se desea realizar reporte
+									#1: hermandad 2:primicias 3: fondo social 
+		hermandad = list()
+		fondo_social = list()
+		primicias = list()
+		aux_e=0
+		aux_s =0
+		tesorero = ''
+		presidente = ''
+
+
+		periodo_existe = Periodo.objects.filter(id=id).exists()
+		if periodo_existe:
+			#obtecion del tesorero actual
+			directiva = get_directiva()
+			for d in directiva:
+				if d.cargo.nombre_cargo == 'Tesorero':
+					tesorero = d.miembro.nombre_m
+				elif d.cargo.nombre_cargo == 'Presidente':
+					presidente = d.miembro.nombre_m
+
+			# fin de obtencion del tesorero actual 
+			periodo = Periodo.objects.get(id=id)
+			transacciones = Transaccion.objects.filter(periodo=periodo)
+			tesorerias = Tesoreria.objects.all()
+			for t in tesorerias:
+				if t.nombre_tesoreria == 'Hermandad':
+					hermandad.append(t.saldo_tesoreria) 
+					for transaccion in transacciones:
+						if transaccion.tipo == 'Ingreso'  and transaccion.tesoreria.nombre_tesoreria == 'Hermandad':
+							aux_e += transaccion.monto_transaccion   
+						elif transaccion.tipo == 'Egreso' and transaccion.tesoreria.nombre_tesoreria == 'Hermandad':
+							aux_s += transaccion.monto_transaccion
+					hermandad.append(aux_e)
+					hermandad.append(aux_s)
+					aux_e = 0
+					aux_s = 0
+					hermandad.append(hermandad[0] + hermandad[2] - hermandad[1])  
+				if t.nombre_tesoreria == 'Fondo Social':
+					fondo_social.append(t.saldo_tesoreria)  
+					for transaccion in transacciones:
+						if transaccion.tipo == 'Ingreso'  and transaccion.tesoreria.nombre_tesoreria == 'Fondo Social':
+							aux_e += transaccion.monto_transaccion 
+						elif transaccion.tipo == 'Egreso' and transaccion.tesoreria.nombre_tesoreria == 'Fondo Social':
+							aux_s += transaccion.monto_transaccion
+					fondo_social.append(aux_e)
+					fondo_social.append(aux_s)
+					aux_e = 0
+					aux_s = 0
+					fondo_social.append(fondo_social[0] + fondo_social[2] - fondo_social[1])  
+				if t.nombre_tesoreria == 'Primicia':
+					primicias.append(t.saldo_tesoreria)
+					for transaccion in transacciones:
+						if transaccion.tipo == 'Ingreso' and transaccion.tesoreria.nombre_tesoreria == 'Primicia':
+							aux_e += transaccion.monto_transaccion 
+						elif transaccion.tipo == 'Egreso' and transaccion.tesoreria.nombre_tesoreria == 'Primicia':
+							aux_s += transaccion.monto_transaccion
+					primicias.append(aux_e)
+					primicias.append(aux_s)
+					aux_e = 0
+					aux_s = 0 
+					primicias.append(primicias[0] + primicias[2]-primicias[1]) 
+		else:
+			periodo = ''
+			transacciones = ''
+		contexto ={
+		'periodo' : periodo,
+		'transacciones': transacciones,
+		'fecha':datetime.now(),
+		'hermandad':hermandad,
+		'fondo_social':fondo_social,
+		'primicias':primicias,
+		'tipo':tipo,
+		'tesorero':tesorero,
+		'presidente':presidente
 		}
 		pdf = render_pdf("periodos/periodo.html", contexto)
 		return HttpResponse(pdf,content_type="application/pdf")
@@ -338,6 +411,7 @@ class factura_pdf(View):
 		pdf = render_pdf("transaccion/factura.html", contexto)
 		return HttpResponse(pdf,content_type="application/pdf")
 
+#funcion para la creacion de transacciones
 def create_transaccion(periodo,tesoreria,fecha,concepto,tipo,monto):
 	if tipo == 'Ingreso':
 		saldo = tesoreria.saldo_tesoreria + monto
@@ -358,6 +432,15 @@ def create_transaccion(periodo,tesoreria,fecha,concepto,tipo,monto):
 		)
 	transaccion_nueva.save()
 	return 
+
+#funcion para la obtencion de los directivos actuales
+def get_directiva():
+	existen_directivos = Directivo.objects.filter(estado= False).exists()
+	if existen_directivos:
+		directivos = Directivo.objects.filter(estado=False)
+	else:
+		directivos = ''
+	return directivos
 
 
 
