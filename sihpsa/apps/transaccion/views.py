@@ -41,6 +41,7 @@ def periodoDirectivo(request):
 			periodo = PeriodoAnualDirectivo.objects.get(id = request.POST.get('idPeriodo'))
 			periodo.estado_periodo_anual = True
 			periodo.save()
+			culminar_directiva()
 			return redirect('periodo_directivo')
 
 	contexto ={
@@ -442,6 +443,25 @@ def get_directiva():
 		directivos = ''
 	return directivos
 
+#función para indicar que los cargos directivos han sido finalizados (estado = True)
+def culminar_directiva():
+	directiva = get_directiva()
+	for d in directiva:
+		d.estado = True
+		d.save()
 
+#función que devuelve un boolean de que si el usuario loggeado es directivo
+def is_directivo():
+	bandera = 0
+	directiva = get_directiva()
+	usuario = request.user
+	for d in directiva:
+		if d.miembro == usuario:
+			bandera +=1
+	if bandera == 0:
+		si_lo_es = False
+	else:
+		si_lo_es = True
+	return si_lo_es
 
 

@@ -17,15 +17,12 @@ from django.views.generic import ListView, CreateView, UpdateView
 
 
 def cargarDeuda(request):
-    #fecha = datetime.now()
-   # form_cargardeuda = cargarDeudaForm
-
+   #fecha = datetime.now()
+   #form_cargardeuda = cargarDeudaForm
     if request.method == 'POST':
-		
         form_cargardeuda = cargarDeudaForm(request.POST)
         if form_cargardeuda.is_valid():
             form_cargardeuda.save()
-            
             return redirect ('/' )
     else:
      form_cargardeuda = cargarDeudaForm()
