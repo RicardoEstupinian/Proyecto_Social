@@ -76,23 +76,23 @@
 							<li class="menu-has-children"><a href="{% url 'transaccion'%}">Modulo Financiero</a>
 								<ul>
 									<li><a href="{% url 'transaccion'%}">Registrar Transacción</a></li>
-									<li class="menu-has-children"><a href="#">Cuentas por Cobrar</a>
+									<li class="menu-has-children"><a href="{% url 'cuentasxcobrar:listaDeudores' %}">Cuentas por Cobrar</a>
 										<ul>
-											<li><a href="#">Registrar cuenta por cobrar</a></li>
-											<li><a href="#">Saldar Cuenta</a></li>
+											<li><a href="{% url 'cuentasxcobrar:cargarDeuda' %}">Registrar cuenta por cobrar</a></li>
+											<li><a href="{% url 'cuentasxcobrar:listaDeudores' %}">Saldar Cuenta</a></li>
 										</ul>
 									</li>
 								</ul>
-							<li class="menu-has-children"><a href="#">Modulo de Afiliación</a>
+							<li class="menu-has-children"><a href="{%url 'miembro:administrar' 'Crucificador' %}">Modulo de Afiliación</a>
 								<ul>
-									<li><a href="#">Nuevo miembro</a></li>
-									<li><a href="#">Ver miembros</a></li>
+									<li><a href="{% url 'miembro:registrar' %}">Nuevo miembro</a></li>
+									<li><a href="{% url 'miembro:administrar' 'Todos' %}">Ver miembros</a></li>
 								</ul>
 							</li>
 							<li class="menu-has-children"><a href="{%url 'venta_url:venta' %}">Ventas</a>
 								<ul>
 									<li><a href="{%url 'venta_url:venta' %}">Nueva venta</a></li>
-									<li><a href="#">Ver ventas</a></li>
+									<!--<li><a href="#">Ver ventas</a></li>-->
 								</ul>
 
 							</li>
@@ -136,7 +136,9 @@
 						          </li>					                		
 				            </ul>
 				          </li>-->
+
 							<li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+						  
 						</ul>
 						{%endif%}
 					</nav><!-- #nav-menu-container -->
@@ -162,8 +164,10 @@
 							<h1 class="text-white h2">Bienvenidos</h1>
 							<h2 class="text-white">Parroquia Santa Alicia</h2>
 							<br>
+							{% if request.user.is_authenticated %}
+				          {%else%}
 							<a href="{% url 'login' %}" class="primary-btn text-uppercase">Iniciar sesion</a>
-
+							{%endif%}
 						</div>
 					</div>
 					<div class="carousel-item" style="height: 100vh">

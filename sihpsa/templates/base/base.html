@@ -77,10 +77,10 @@
 							<li class="menu-has-children"><a href="{% url 'transaccion'%}">Modulo Financiero</a>
 								<ul>
 									<li><a href="{% url 'transaccion'%}">Registrar Transacción</a></li>
-									<li class="menu-has-children"><a href="#">Cuentas por Cobrar</a>
+									<li class="menu-has-children"><a href="{% url 'cuentasxcobrar:listaDeudores' %}">Cuentas por Cobrar</a>
 										<ul>
-											<li><a href="#">Registrar cuenta por cobrar</a></li>
-											<li><a href="#">Saldar Cuenta</a></li>
+											<li><a href="{% url 'cuentasxcobrar:cargarDeuda' %}">Registrar cuenta por cobrar</a></li>
+											<li><a href="{% url 'cuentasxcobrar:listaDeudores' %}">Saldar Cuenta</a></li>
 										</ul>
 									</li>
 								</ul>

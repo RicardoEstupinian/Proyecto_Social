@@ -464,4 +464,13 @@ def is_directivo():
 		si_lo_es = True
 	return si_lo_es
 
+def existe_periodo_actual():
+	periodo_actual = False
+	periodo_directivo_existe = PeriodoAnualDirectivo.objects.filter(estado_periodo_anual = False)
+	if periodo_directivo_existe:
+		periodo_actual_existe = Periodo.objects.filter(estado_periodo= False)
+		if periodo_actual_existe:
+			periodo_actual = True
+	return periodo_actual
+
 
