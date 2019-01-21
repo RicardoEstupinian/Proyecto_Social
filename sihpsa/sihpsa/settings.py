@@ -136,4 +136,4 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_env", "static_root")
 MEDIA_DIRS = (os.path.join(BASE_DIR, 'static/media'),)
-ALLOWED_HOSTS = ['206.189.198.74']
+ALLOWED_HOSTS = ['142.93.202.162']
