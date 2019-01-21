@@ -3,41 +3,22 @@
 
 {% block content %}
      <!-- Area Chart Example-->
+ <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
           <i class="fas fa-chart-area"></i>
-          Cargar deuda a miembro
+          Cargar deuda
+        </div>
+          <div class="card-body">
+
+              {{form.as_p}}
+
+            <button type="submit" class="btn btn-primary " name="btnCargarDeuda">Realizar Cargo</button>
+
           </div>
-        <div class="card-body">
-          <form method="POST">
-          {% csrf_token %}
-          <div class="container">
-            <div class="row">
-              <div class="col-md-6">
-                <label >1</label>
-                <input class="form-control" type="date" name="fecha_transaccion" required>
-              </div>
-              <div class="col-md-6">
-                <label >Nombre del miembro</label>
-                
-              </div>
-            </div>
-            <br>
-            <div class="row">
-              <div class="col-md-6">
-                <label >{2</label>
-                
-              </div>
-              <div class="col-md-6">
-                <label >3</label>
-                
-              </div>
-            </div>
-            <br>
-            <div class="row">
-              <div class="col-md-12">
-                <label > 3</label>
-                
-              </div>      
-            </div>
+          </form>
+        </div>
+        <div class="card-footer small text-muted"></div>
+      </div>
+
 {% endblock %} 

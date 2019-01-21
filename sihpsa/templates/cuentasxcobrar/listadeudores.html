@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col"> Nombre</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Concepto</th>
+      <th scope="col">Monto</th>
+      <th scope="col"> Saldo </th>
+     
+     
+      <th scope="col">Acciones</th>
+     
+      
+      
+    </tr>
+  </thead>
+  <tbody>
+    {% if object_list %}
+    {% for CuentasPorCobrar in object_list %}
+    
+
+    
+    <tr>
+      <td>{{CuentasPorCobrar.id}}</td>
+      <td>{{CuentasPorCobrar.miembro}}</td>
+      <td> {{CuentasPorCobrar.fecha_cc}}</td>
+      <td> {{CuentasPorCobrar.concepto_cc}}</td>
+      <td>{{CuentasPorCobrar.monto_cc}} </td>
+      <td>{{CuentasPorCobrar.saldo_cc}}</td>
+      
+    
+     
+
+
+      <td> <a href="{% url 'cuentasxcobrar:editar' CuentasPorCobrar.id %}"  class="btn btn-light">Editar </a> </td>
+    
+    
+    
+
+    {% endfor%}
+    {% else %}
+    <h1> No se encuentran registros disponibles </h1>
+
+    
+
+    {% endif %}
+   
+  </tbody>
+</table> 
+
+%{% endblock %}

@@ -55,6 +55,11 @@ class Miembro(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+    def __str__(self):
+        return self.nombre_m
+    
+
 
 class CuentasPorCobrar(models.Model):
     miembro = models.ForeignKey(Miembro, null=True, blank=True, on_delete=models.CASCADE)
@@ -62,4 +67,6 @@ class CuentasPorCobrar(models.Model):
     tipo_cc = models.CharField(max_length=50)
     monto_cc = models.FloatField()
     concepto_cc = models.CharField(max_length=50)
+    saldo_cc = models.FloatField(null = True )
+    
 
