@@ -75,7 +75,6 @@ def lista_deudores(request):
 	for m in miembros:
 		tiene_cuenta = CuentasPorCobrar.objects.filter(miembro= m).exists()
 		if tiene_cuenta:
-			print("si existe")
 			acumulador = 0
 			cuentas = CuentasPorCobrar.objects.filter(miembro= m)
 			for c in cuentas:

@@ -37,7 +37,14 @@
     <label>fecha de venta</label>
     {{form.fecha_venta}}
   </div>
+  {%if existe_periodo%}
   <button type="submit" class="btn-info">Guardar</button>
+  {%else%}
+  <div class="alert alert-info" role="alert">
+              Para poder registrar una venta se debe de tener un periodo vigente, por favor 
+              <a href="{%url 'periodo_directivo'%}" > crear un nuevo periodo </a>
+            </div>
+  {%endif%}
 </form>
 
 <script type="text/javascript">
