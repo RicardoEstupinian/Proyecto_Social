@@ -44,25 +44,32 @@ Periodo seleccionado
 			</div>
 			<br>
 			<div class="row">
+              {%if periodo.estado_periodo == False %}
               <div class="col-md-3">
                 <strong> Fondo Actual: </strong> $ {{hermandad.0}}0 
               </div>
               <div class="col-md-3">
                 <strong> Fondo inicial: </strong> $ {{hermandad.3}}0
               </div>
+              
               <div class="col-md-3">
-                <strong> Ingresos del periodo: </strong> $ {{hermandad.1}}
+                <strong> Ingresos del periodo: </strong> ${{hermandad.1}}
               </div>
               <div class="col-md-3">
-                <strong> Egresos del Periodo: </strong> $ {{hermandad.2}}
+                <strong> Egresos del Periodo: </strong> ${{hermandad.2}}
               </div>
+              {% endif%}
+              {%if periodo.estado_periodo == True%}
+              <div class="col-md-6">
+                <strong> Ingresos del periodo: </strong> ${{hermandad.1}}
+              </div>
+              <div class="col-md-6">
+                <strong> Egresos del Periodo: </strong> ${{hermandad.2}}
+              </div>
+              {%endif%}
             </div>
             <br>
-            <div class="row">
-          <div class="col-md-12">
-            <a href="{%url 'periodo_pdf' periodo.id %}" class="btn btn-primary">Generar Reporte PDF</a>
-          </div>
-          </div>
+            
           	</div>
          </div>
 			<div class="card-footer small text-muted"></div>
@@ -117,21 +124,31 @@ Periodo seleccionado
             </table>
           </div>
         </div>
-        <div class="card-footer small text-muted">Actualizado: {{fecha}}</div>
+        <div class="card-footer small text-muted">
+          <div class="row">
+          <div class="col-md-8">
+            Actualizado: {{fecha}}
+          </div>
+          <div class="col-md-4">
+            <a href="{%url 'periodo_pdf' periodo.id  1 %}" class="btn btn-primary">Generar Reporte PDF</a>
+          </div>
+          </div>
+        </div>
       </div>
-
 	  <div class="card mb-3">
         <div class="card-header">
           <i class="fas fa-table"></i>
           Libro Mayor | Tesorería de Primicias
           <br><br>
             <div class="row">
+               {%if periodo.estado_periodo == False %}
               <div class="col-md-3">
                 <strong> Fondo Actual: </strong> $ {{primicias.0}}0 
               </div>
               <div class="col-md-3">
                 <strong> Fondo inicial: </strong> $ {{primicias.3}}0
               </div>
+              {%endif%}
               <div class="col-md-3">
                 <strong> Ingresos del periodo: </strong> $ {{primicias.1}}
               </div>
@@ -180,7 +197,16 @@ Periodo seleccionado
             </table>
           </div>
         </div>
-        <div class="card-footer small text-muted">Actualizado: {{fecha}}</div>
+        <div class="card-footer small text-muted">
+          <div class="row">
+          <div class="col-md-8">
+            Actualizado: {{fecha}}
+          </div>
+          <div class="col-md-4">
+            <a href="{%url 'periodo_pdf' periodo.id  2 %}" class="btn btn-primary">Generar Reporte PDF</a>
+          </div>
+          </div>
+        </div>
       </div>
 
 	  <div class="card mb-3">
@@ -190,12 +216,14 @@ Periodo seleccionado
           <br>
           <br>  
             <div class="row">
+               {%if periodo.estado_periodo == False %}
               <div class="col-md-3">
                 <strong> Fondo Actual: </strong> $ {{fondo_social.0}}0 
               </div>
               <div class="col-md-3">
                 <strong> Fondo inicial: </strong> $ {{fondo_social.3}}0
               </div>
+              {%endif%}
               <div class="col-md-3">
                 <strong> Ingresos del periodo: </strong> $ {{fondo_social.1}}
               </div>
@@ -243,7 +271,16 @@ Periodo seleccionado
             </table>
           </div>
         </div>
-        <div class="card-footer small text-muted">Actualizado: {{fecha}}</div>
+        <div class="card-footer small text-muted">
+          <div class="row">
+          <div class="col-md-8">
+            Actualizado: {{fecha}}
+          </div>
+          <div class="col-md-4">
+            <a href="{%url 'periodo_pdf' periodo.id  3 %}" class="btn btn-primary">Generar Reporte PDF</a>
+          </div>
+          </div>
+        </div>
       </div>
 
     </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <title>Factura</title>
+        <title>Reporte</title>
         <style type="text/css">
             body {
                 font-weight: 200;
@@ -50,64 +50,136 @@
     <body>
         <div class='wrapper'>
             <div class='header'>
-                <p class='title'>Esta es una prueba :v </p>
+                <p class='title'> </p>
             </div>
         </div>
         <div class='details'>
-            Concepto: Pago de matricula <br>
-            Monto: $ 50.00 <br>
-            Fecha: 23/Dic/1000
+            <p class='title'>Hermandades Parroquia Santa Alicia<br>REPORTE DE TESORERIAS </p>
             <hr class='hrItem'/>
         </div>
-        <br>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="6" align="center" > INFORMACION GENERAL <br></th>
+                </tr>               
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3"><strong> Inicio de periodo: </strong> {{periodo.inicio_periodo}}</td>
+                    <td colspan="3"><strong> Final de periodo: </strong> {{periodo.final_periodo}}</td>
+                    
+                </tr>
+                <tr>
+                    <th colspan="6" align="center" ><hr class='hrItem'/></th>
+                </tr>
+                {%if tipo == '1' %}
+                <tr>
+                    <th colspan="6" align="center" >TESORERIA DE HERMANDAD <br></th>
+                </tr>
+
+                <tr>
+                    <td colspan="3"><strong> Total de ingresos:</strong>  ${{hermandad.1}}</td>
+                    <td colspan="3"><strong> Total de egresos: </strong> ${{hermandad.2}}</td>
+                </tr>
+
+                {%elif tipo == '2'%}
+                <tr>
+                    <th colspan="6" align="center"> TESORERIA DE PRIMICIAS <br></th>
+                </tr> 
+                <tr>
+                    <td colspan="3"><strong> Total de ingresos:</strong>  ${{primicias.1}}</td>
+                    <td colspan="3"><strong> Total de egresos: </strong> ${{primicias.2}}</td>
+                </tr>
+                {%elif tipo == '3'%} 
+                <tr>
+                    <th colspan="6" align="center"> TESORERIA DE FONDO SOCIAL <br></th>
+                </tr> 
+                <tr>
+                    <td colspan="3"><strong> Total de ingresos:</strong>  ${{fondo_social.1}}</td>
+                    <td colspan="3"><strong> Total de egresos: </strong> ${{fondo_social.2}}</td>
+                </tr>
+                {%endif%}
+            </tbody>
+        </table>
+        <hr class='hrItem'/>
+        <br><br>
         <table>
         	<thead>
 		   		<tr>
-        			<th>Fecha</th>
-        			<th>Fecha</th>
-        			<th>Fecha</th>
-        			<th>Fecha</th>
-        			<th>Fecha</th>
+        		  <th colspan="2">Fecha<br></th>
+                  <th colspan="2">Concepto<br></th>
+                  <th>Tipo<br></th>
+                  <th>Monto<br></th>
+                  <th>Saldo<br></th>
         		</tr>        		
         	</thead>
-        	
         	<tbody>
-        		<tr>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        		</tr>
-        		<tr>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        		</tr>
-        		<tr>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        		</tr>
-        		<tr>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        		</tr>
-        		<tr>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        			<td>23/Dic/1000</td>
-        		</tr>
+        		{%if transacciones%}
+                {% if tipo == '1' %}
+                {%for t in transacciones%}
+                {%if t.tesoreria.nombre_tesoreria == 'Hermandad'%}
+                <tr>
+                  <td colspan="2">{{t.fecha_transaccion}}<br></td>
+                  <td colspan="2">  {{  t.concepto_transaccion}}<br></td>
+                  <td>{{t.tipo}}<br></td>
+                  <td>${{t.monto_transaccion}}<br></td>
+                  <td>${{t.saldo_transaccion}}<br></td>
+                </tr>
+                {%endif%}
+                {%endfor%}
+                {%elif tipo == '2'%}
+                {%for t in transacciones%}
+                {%if t.tesoreria.nombre_tesoreria == 'Primicia'%}
+                <tr>
+                  
+                  <td colspan="2">{{t.fecha_transaccion}}<br></td>
+                  <td colspan="2">  {{  t.concepto_transaccion}}<br></td>
+                  <td>{{t.tipo}}<br></td>
+                  <td>${{t.monto_transaccion}}<br></td>
+                  <td>${{t.saldo_transaccion}}<br></td>
+
+                </tr>
+
+                {%endif%}
+                {%endfor%}
+                {%elif tipo == '3'%}
+                {%for t in transacciones%}
+                {%if t.tesoreria.nombre_tesoreria == 'Fondo Social'%}
+                <tr>
+                  
+                  <td colspan="2">{{t.fecha_transaccion}}<br></td>
+                  <td colspan="2">  {{  t.concepto_transaccion}}<br></td>
+                  <td>{{t.tipo}}<br></td>
+                  <td>${{t.monto_transaccion}}<br></td>
+                  <td>${{t.saldo_transaccion}}<br></td>
+
+                </tr>
+
+                {%endif%}
+                {%endfor%}
+                {%endif%}
+                {%endif%}
         	</tbody>
         </table>
+        <p><strong> Reporte generado:</strong> {{fecha}}</p>
+        <br>
+        <table>
+            <tbody>
+                <tr>
+                    <th colspan="2" align="center" >______________________</th>
+                    <th colspan="2" align="center" >______________________</th>
+                </tr>  
+                <tr>
+                    <td colspan="2" align="center">{{tesorero}}</td>
+                    <td colspan="2" align="center">{{presidente}}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">Tesorero</td>
+                    <td colspan="2" align="center">Presidente</td>
+                </tr>
+            </tbody>
+        </table>
+              
     </body>
 </html>

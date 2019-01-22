@@ -1,0 +1,101 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block title %}
+Asignación
+{% endblock %}
+{%block css%}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/sb-admin.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/sb-admin.min.css' %}">
+  <!-- Page level plugin CSS-->
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.css' %}" type="text/css" rel="stylesheet">
+{%endblock%}
+{% block content %}
+<div id="wrapper">
+      <div id="content-wrapper">
+        <div class="container-fluid">
+          <h1 align="center">Libro de deudores</h1><br>
+          <!-- DataTables Example -->
+          <div class="card mb-3">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-md-9">
+              <i class="fas fa-table"></i>
+              Miembros de la Hermandad - Cuentas por cobrar
+                </div>
+                <div class="col-md-3">
+              <a class="btn btn-primary"   href="{%url 'cuentasxcobrar:cargarDeuda'%}" > Registrar deuda </a>
+              </div>
+            </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Carnet</th>
+                      <th>Nombres</th>
+                      <th>Apellidos</th>
+                      <th>Saldo</th>
+                      <th>Cargar</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Carnet</th>
+                      <th>Nombres</th>
+                      <th>Apellidos</th>
+                      <th>Saldo</th>
+                      <th>Cargar</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    {%if lista_cuenta%}
+                    {%for l in lista_cuenta%}
+                    <tr>
+                      <td>{{l.0.carnet}}</td>
+                      <td>{{l.0.nombre_m}}</td>
+                      <td>{{l.0.apellido_m}}</td>
+                      <td>${{l.1}}</td>
+                      <td>
+                        <a class="btn btn-primary" href="{%url 'cuentasxcobrar:saldarDeuda' l.0.id %}" > Ver Detalle</a>
+                      </td>
+                    </tr>
+                    {%endfor%}
+                    {%endif%}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-footer small text-muted">Actualizado {{fecha}}</div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+        
+      </div>
+      <!-- /.content-wrapper -->
+    </div>
+
+    <!-- /#wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+            
+{%block js%}
+  <script type="text/javascript" src="{% static 'js/sb-admin.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/sb-admin.min.js'%}"></script>
+  <!-- Bootstrap core JavaScript-->
+    <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script type="text/javascript" src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script type="text/javascript" src="{% static 'vendor/datatables/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/demo/datatables-demo.js' %}"></script>
+{%endblock%}
+{% endblock %}
