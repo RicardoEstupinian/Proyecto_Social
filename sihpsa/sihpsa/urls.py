@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from django.conf.urls import url
 from django.conf.urls.static import static
 from sihpsa.views import base
 from django.contrib.auth.views import login, logout_then_login
@@ -27,12 +28,8 @@ urlpatterns = [
     path('accounts/login/', login, {'template_name':'login/login.html'}, name='login'),
     path('logout/', logout_then_login, name='logout'),
     path('modulo-financiero/',include('apps.transaccion.urls')),
-
     path('cuentas-x-cobrar/',include('apps.cuentasxcobrar.urls')),
-
-
     path('venta/', include(('apps.ventas.urls','ventas'),namespace='venta_url')),
-
     path('inventario/',include(('apps.venta.urls','venta'),namespace='inventario_url')),
 ]
 
