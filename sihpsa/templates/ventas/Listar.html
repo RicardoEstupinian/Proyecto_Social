@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block title %}SIHPSA | Inventario{% endblock %}
+
+{% block content %}
+<thead>
+	<tr>
+	<table class = "table">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Articulo</th>
+				<th scope="col">Concepto de Venta</th>
+				<th scope="col">Cantidad</th>
+				<th scope="col">Precio de venta unitario</th>
+				<th scope="col">Monto total</th>
+				<th scope="col">Fecha de Venta</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for venta in object_list %}
+			<tr>
+				<td>{{venta.articulo}}</td>
+				<td>{{venta.concepto_venta}}</td>
+				<td>{{venta.cantidad}}</td>
+				<td>{{venta.precio_venta_unitario}}</td>
+				<td>{{venta.monto_total}}</td>
+				<td>{{venta.fecha_venta}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	</tr>
+</thead>
+
+{%endblock%}

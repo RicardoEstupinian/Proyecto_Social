@@ -5,9 +5,17 @@ from apps.venta.forms import ArticuloForm
 from apps.venta.models import Venta
 from apps.ventas.forms import VentasForm
 from django.shortcuts import render, redirect
+from django.views.generic import ListView
 
 # Create your views here.
+class Lista(ListView):
+	model = Venta
+	template_name = 'ventas/Listar.html'
 
+'''def Listar(request):
+	lista = Venta.objects.all()
+	contexto = {'lista': lista}
+	return render(request, 'ventas/Listar.html', contexto)'''
 
 def Cargar(request):
 	error = False
@@ -21,6 +29,9 @@ def Cargar(request):
 			nombre = request.POST.get('articulo')
 			articul = Articulo.objects.get(id=nombre)
 			a = articul.existencia
+			b = articul.vendible
+			if b == False:
+				error = True
 			if int(cantida) > a:
 				error = True
 			else:

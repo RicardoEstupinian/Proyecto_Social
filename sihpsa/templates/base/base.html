@@ -93,7 +93,7 @@
 							<li class="menu-has-children"><a href="{%url 'venta_url:venta' %}">Ventas</a>
 								<ul>
 									<li><a href="{%url 'venta_url:venta' %}">Nueva venta</a></li>
-									<li><a href="#">Ver ventas</a></li>
+									<li><a href="{%url 'venta_url:Lista' %}">Ver ventas</a></li>
 								</ul>
 
 							</li>
@@ -106,7 +106,7 @@
 
 
 							{% if request.user.is_authenticated %}
-							<li><a href="#">Bienvenido: {{user.username}}</a></li>
+							<li><a href="{% url 'miembro:ver' user.id %}">Bienvenido: {{user.username}}</a></li>
 							<li><a href="{% url 'logout' %}">Logout </a></li>
 							{% else %}
 							<li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
